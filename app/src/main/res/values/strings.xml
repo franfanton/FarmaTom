@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">FarmaTom</string>
+    <string name="titulo_inicial">Hola, está por crear su cuenta en FarmaTom</string>
+    <string name="nombre">Ingrese su Nombre</string>
+    <string name="passwd">Ingrese su Contraseña</string>
+    <string name="rep_passwd">Ingrese Nuevamente su Contraseña</string>
+    <string name="mail">Ingrese su Correo Electrónico</string>
+    <string name="term_cond">Acepto los términos y condiciones</string>
+    <string name="registrar">Confirmar Usuario</string>
+    <string name="tituloNuevoPedido">Encargar Medicamento</string>
+    <string name="correoNuevoPedido">Ingrese su correo electronico</string>
+    <string name="direccionNuevoPedido">Ingrese la dirección de destino</string>
+    <string name="tipoNuevoPedido">Tipo de pedido</string>
+    <string name="envioNuevoPedido">Envío</string>
+    <string name="takeawayNuevoPedido">Take Away</string>
+    <string name="btnAgregarUbicacion">AGREGAR UBICACIÓN ACTUAL</string>
+    <string name="listadoNuevoPedido">Ver Medicamentos</string>
+    <string name="tituloListadoNuevoPedido">Medicamento a pedir:</string>
+    <string name="totalNuevoPedido">Total del pedido: $</string>
+    <string name="guardarNuevoPedido">Realizar Pedido</string>
+    <string name="tituloNuevoMedicamento">Nuevo Medicamento</string>
+    <string name="titulo">Título</string>
+    <string name="descripcionNuevoMedicamento">Descripción del Medicamento</string>
+    <string name="precioNuevoMedicamento">Precio</string>
+    <string name="miligramosNuevoMedicamento">Miligramos</string>
+    <string name="guardarNuevoMedicamento">Guardar Medicamento</string>
 </resources>

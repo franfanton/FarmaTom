@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/nevoPedido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tituloNuevoPedido"
+        android:textSize="30sp"
+        android:layout_marginBottom="@dimen/margenes_inferior"
+        android:textColor="@android:color/black"/>
+
+    <EditText
+        android:id="@+id/correoPedidoNuevo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/correoNuevoPedido"
+        android:inputType="textEmailAddress"
+        android:layout_marginBottom="@dimen/margenes_inferior" />
+
+    <EditText
+        android:id="@+id/direccionPedidoNuevo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start|top"
+        android:hint="@string/direccionNuevoPedido"
+        android:inputType="textMultiLine"
+        android:layout_marginBottom="@dimen/margenes_inferior" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tipoNuevoPedido"
+            android:textColor="@android:color/black" />
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/botonEnvioPedido"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/envioNuevoPedido"/>
+            <RadioButton
+                android:id="@+id/botonTakeawayPedido"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/takeawayNuevoPedido" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/botonUbicacion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#3B9316"
+        android:text="@string/btnAgregarUbicacion"
+        android:enabled="false"
+        android:layout_marginHorizontal="65dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/listadoPlatos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="65dp"
+        android:layout_marginBottom="10dp"
+        android:background="#3B9316"
+        android:hint="@string/listadoNuevoPedido"
+        android:enabled="true"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/listadoProductosPedidos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tituloListadoNuevoPedido"
+        android:textSize="20sp"
+ />
+
+    <TextView
+        android:id="@+id/nombrePlato"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:text=""
+        android:textSize="20sp"
+        android:layout_marginBottom="@dimen/margenes_inferior"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/totalNuevoPedido"
+        android:textColor="@android:color/black"/>
+        <TextView
+            android:id="@+id/totalNuevoPedido"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/botonGuardarOrden"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="65dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#3B9316"
+        android:hint="@string/guardarNuevoPedido"
+        android:enabled="true"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
+
+
+
+</LinearLayout>

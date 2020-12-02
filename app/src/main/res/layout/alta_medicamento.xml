@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/nuevoPlato"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tituloNuevoMedicamento"
+        android:textSize="30sp"
+        android:layout_marginBottom="@dimen/margenes_inferior" />
+
+
+    <EditText
+        android:id="@+id/tituloPlato"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/titulo"
+        android:inputType="text"
+        android:layout_marginBottom="@dimen/margenes_inferior" />
+
+    <EditText
+        android:id="@+id/descripcionPlato"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start|top"
+        android:lines="3"
+        android:hint="@string/descripcionNuevoMedicamento"
+        android:inputType="textMultiLine"
+        android:maxLength="200"
+        android:layout_marginBottom="@dimen/margenes_inferior" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="40dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:text="$"
+            android:textColor="@android:color/black" />
+        <EditText
+            android:id="@+id/precioPlato"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/precioNuevoMedicamento"
+            android:inputType="numberDecimal"
+            android:maxLength="6"/>
+        <EditText
+            android:id="@+id/caloriasPlato"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="12dp"
+            android:layout_weight="1"
+            android:hint="@string/miligramosNuevoMedicamento"
+            android:inputType="number"
+            android:maxLength="4"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/botonGuardarPlato"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="65dp"
+        android:layout_marginBottom="10dp"
+        android:background="#3B9316"
+        android:hint="@string/guardarNuevoMedicamento"
+        android:enabled="true"/>
+
+</LinearLayout>
