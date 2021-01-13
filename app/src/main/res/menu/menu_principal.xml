@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/itemRegistrar"
+        android:title="Registrar"/>
+    <item android:id="@+id/itemCrear"
+        android:title="Cargar Medicamento"/>
+    <item android:id="@+id/altaPedido"
+        android:title="Realizar Pedido"/>
+    <item android:id="@+id/itemListar"
+        android:title="Listado Medicamentos"/>
+</menu>
