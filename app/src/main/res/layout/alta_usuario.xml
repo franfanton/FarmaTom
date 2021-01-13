@@ -12,32 +12,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/titulo_inicial"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:layout_margin="20dp"
+        android:textAlignment="center"/>
     <EditText
         android:id="@+id/nombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/nombre"
-        android:inputType="text" />
+        android:inputType="text"
+        android:layout_marginBottom="10dp"/>
 
     <EditText
         android:id="@+id/contrasenia1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/passwd"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword"
+        android:layout_marginBottom="10dp"/>
     <EditText
         android:id="@+id/contrasenia2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/rep_passwd"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword"
+        android:layout_marginBottom="10dp"/>
     <EditText
         android:id="@+id/correo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/mail"
-        android:inputType="textEmailAddress"/>
+        android:inputType="textEmailAddress"
+        android:layout_marginBottom="10dp"/>
     <!--<TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -166,7 +172,8 @@
         android:id="@+id/terminosycondiciones"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/term_cond" />
+        android:text="@string/term_cond"
+        android:layout_marginBottom="10dp"/>
 
     <Button
         android:id="@+id/button2"
@@ -176,6 +183,6 @@
         android:layout_marginHorizontal="65dp"
         android:layout_marginBottom="10dp"
         android:backgroundTint="#3B9316"
-        android:text="@string/registrar" />
+        android:text="@string/registrar"/>
 
 </LinearLayout>

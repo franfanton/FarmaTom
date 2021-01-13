@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".MainActivity"/>
+        <activity android:name=".AltaUsuarioActivity"/>
+        <activity android:name=".AltaItemActivity"/>
+        <activity android:name=".AltaOrdenActivity"/>
         <activity android:name=".HomeActivity">
 
         <intent-filter>

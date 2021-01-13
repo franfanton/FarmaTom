@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/nuevoPlato"
+        android:id="@+id/nuevoMedicamento"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/tituloNuevoMedicamento"
@@ -16,7 +16,7 @@
 
 
     <EditText
-        android:id="@+id/tituloPlato"
+        android:id="@+id/tituloMedicamento"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/titulo"
@@ -24,7 +24,7 @@
         android:layout_marginBottom="@dimen/margenes_inferior" />
 
     <EditText
-        android:id="@+id/descripcionPlato"
+        android:id="@+id/descripcionMedicamento"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="start|top"
@@ -47,7 +47,7 @@
             android:text="$"
             android:textColor="@android:color/black" />
         <EditText
-            android:id="@+id/precioPlato"
+            android:id="@+id/precioMedicamento"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -55,7 +55,7 @@
             android:inputType="numberDecimal"
             android:maxLength="6"/>
         <EditText
-            android:id="@+id/caloriasPlato"
+            android:id="@+id/miligramosMedicamento"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="12dp"
@@ -66,7 +66,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/botonGuardarPlato"
+        android:id="@+id/botonGuardarMedicamento"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="65dp"

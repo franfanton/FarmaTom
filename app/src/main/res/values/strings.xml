@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">FarmaTom</string>
-    <string name="titulo_inicial">Hola, está por crear su cuenta en FarmaTom</string>
+    <string name="titulo_inicial">Complete el formulario: </string>
     <string name="nombre">Ingrese su Nombre</string>
     <string name="passwd">Ingrese su Contraseña</string>
     <string name="rep_passwd">Ingrese Nuevamente su Contraseña</string>
@@ -24,4 +24,5 @@
     <string name="precioNuevoMedicamento">Precio</string>
     <string name="miligramosNuevoMedicamento">Miligramos</string>
     <string name="guardarNuevoMedicamento">Guardar Medicamento</string>
+    <string name="mailCorrecto">[a-zA-Z0-9._-]+@[a-z]+\\.[a-z]+</string>
 </resources>
