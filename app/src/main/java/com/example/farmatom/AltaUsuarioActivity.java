@@ -1,7 +1,11 @@
 package com.example.farmatom;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -69,5 +73,41 @@ public class AltaUsuarioActivity extends AppCompatActivity {
             }
         }
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_principal, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent i;
+        switch(item.getItemId()){
+            case R.id.itemRegistrar:
+                Toast.makeText(this, "Selecciono Registrarse", Toast.LENGTH_SHORT).show();
+                i = new Intent(AltaUsuarioActivity.this, AltaUsuarioActivity.class);
+                startActivity(i);
+                break;
+
+            case R.id.itemCrear:
+                Toast.makeText(this, "Selecciono Crear Item", Toast.LENGTH_SHORT).show();
+                i = new Intent(AltaUsuarioActivity.this, AltaItemActivity.class);
+                startActivity(i);
+                break;
+
+            case R.id.itemListar:
+                Toast.makeText(this, "Selecciono ver Lista de Items", Toast.LENGTH_SHORT).show();
+                i = new Intent(AltaUsuarioActivity.this, ListaMedicamentosActivity.class);
+                startActivity(i);
+                break;
+
+            case R.id.altaPedido:
+                Toast.makeText(this, "Selecciono Realizar Pedido", Toast.LENGTH_SHORT).show();
+                i = new Intent(AltaUsuarioActivity.this, AltaOrdenActivity.class);
+                startActivity(i);
+                break;
+        }
+        return true;
     }
 }

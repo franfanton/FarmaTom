@@ -1,4 +1,5 @@
 package com.example.farmatom;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -43,8 +44,8 @@ public class HomeActivity extends AppCompatActivity{
 
             case R.id.itemListar:
                 Toast.makeText(this, "Selecciono ver Lista de Items", Toast.LENGTH_SHORT).show();
-                //i = new Intent(HomeActivity.this, ListaPlatosActivity.class);
-                //startActivity(i);
+                i = new Intent(HomeActivity.this, ListaMedicamentosActivity.class);
+                startActivity(i);
                 break;
 
             case R.id.altaPedido:
