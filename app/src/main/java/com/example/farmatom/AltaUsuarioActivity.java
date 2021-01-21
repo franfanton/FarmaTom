@@ -27,8 +27,6 @@ public class AltaUsuarioActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alta_usuario);
-        Toolbar toolbar = findViewById(R.id.toolbarHome);
-        setSupportActionBar(toolbar);
 
         final Button boton = findViewById(R.id.button2);
         nombre = (EditText) findViewById(R.id.nombre);
@@ -51,6 +49,7 @@ public class AltaUsuarioActivity extends AppCompatActivity {
 
         boton.setOnClickListener(new View.OnClickListener(){
         public void onClick(View view) {
+            Intent i;
             String emailPattern = getString(R.string.mailCorrecto);
             if(nombre.getText().toString().isEmpty()){
                 Toast.makeText(getApplicationContext(), "El campo nombre esta vacio.", Toast.LENGTH_SHORT).show();
@@ -70,44 +69,10 @@ public class AltaUsuarioActivity extends AppCompatActivity {
             }
             else {
                 Toast.makeText(getApplicationContext(), "Registro Exitoso!", Toast.LENGTH_SHORT).show();
+                i = new Intent(AltaUsuarioActivity.this, HomeActivity.class);
+                startActivity(i);
             }
         }
         });
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_principal, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent i;
-        switch(item.getItemId()){
-            case R.id.itemRegistrar:
-                Toast.makeText(this, "Selecciono Registrarse", Toast.LENGTH_SHORT).show();
-                i = new Intent(AltaUsuarioActivity.this, AltaUsuarioActivity.class);
-                startActivity(i);
-                break;
-
-            case R.id.itemCrear:
-                Toast.makeText(this, "Selecciono Crear Item", Toast.LENGTH_SHORT).show();
-                i = new Intent(AltaUsuarioActivity.this, AltaItemActivity.class);
-                startActivity(i);
-                break;
-
-            case R.id.itemListar:
-                Toast.makeText(this, "Selecciono ver Lista de Items", Toast.LENGTH_SHORT).show();
-                i = new Intent(AltaUsuarioActivity.this, ListaMedicamentosActivity.class);
-                startActivity(i);
-                break;
-
-            case R.id.altaPedido:
-                Toast.makeText(this, "Selecciono Realizar Pedido", Toast.LENGTH_SHORT).show();
-                i = new Intent(AltaUsuarioActivity.this, AltaOrdenActivity.class);
-                startActivity(i);
-                break;
-        }
-        return true;
     }
 }

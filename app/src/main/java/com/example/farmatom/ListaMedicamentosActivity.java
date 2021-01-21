@@ -143,12 +143,6 @@ public class ListaMedicamentosActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent i;
         switch(item.getItemId()){
-            case R.id.itemRegistrar:
-                Toast.makeText(this, "Selecciono Registrarse", Toast.LENGTH_SHORT).show();
-                i = new Intent(ListaMedicamentosActivity.this, AltaUsuarioActivity.class);
-                startActivity(i);
-                break;
-
             case R.id.itemCrear:
                 Toast.makeText(this, "Selecciono Crear Item", Toast.LENGTH_SHORT).show();
                 i = new Intent(ListaMedicamentosActivity.this, AltaItemActivity.class);
