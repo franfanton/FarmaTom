@@ -24,8 +24,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
+import androidx.room.Room;
 
+import com.example.farmatom.Model.Medicamento;
 import com.example.farmatom.Model.Orden;
+import com.example.farmatom.Room.Orden.AppDatabase;
 
 import java.util.Objects;
 
@@ -105,6 +108,10 @@ public class AltaOrdenActivity extends AppCompatActivity {
                     int delay = 8;
                     String tittle = "FarmaTom";
                     String content = "Orden cargada con exito!";
+
+                    AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                            AppDatabase.class, "medicamento-db").allowMainThreadQueries().build();
+                    db.ordenDao().insertar(nuevaOrden);
 
                     scheduleNotification(getNotification(content, tittle), delay);
                 }

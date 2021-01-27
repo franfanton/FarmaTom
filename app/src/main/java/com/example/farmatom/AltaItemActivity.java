@@ -8,14 +8,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.room.Room;
 
 import com.example.farmatom.Model.Medicamento;
+import com.example.farmatom.Room.Medicamento.AppDatabase;
 
 public class AltaItemActivity  extends AppCompatActivity {
     private EditText tituloMedicamento,descripcionMedicamento,precioMedicamento,miligramosMedicamento;
@@ -59,6 +60,12 @@ public class AltaItemActivity  extends AppCompatActivity {
                     String titulo = tituloMedicamento.getText().toString();
                     String descripcion = descripcionMedicamento.getText().toString();
                     String miligramos = miligramosMedicamento.getText().toString();
+
+                    AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                            AppDatabase.class, "medicamento-db").allowMainThreadQueries().build();
+                    Medicamento medicamento = new Medicamento(R.drawable.plato, titulo, descripcion,
+                            precioDouble, miligramos, "0");
+                    db.medicamentoDao().insertar(medicamento);
 
                     Medicamento nuevoMedicamento = new Medicamento(0,titulo,descripcion,precioDouble,miligramos,null);
                     // INTENT
