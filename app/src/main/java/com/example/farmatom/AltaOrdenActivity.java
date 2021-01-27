@@ -75,6 +75,7 @@ public class AltaOrdenActivity extends AppCompatActivity {
 
         botonGuardarOrden.setOnClickListener(new View.OnClickListener(){
             String emailPattern = getString(R.string.mailCorrecto);
+            String tipoEnvio;
             @Override
             public void onClick(View view) {
                 if (correoPedidoNuevo.getText().toString().isEmpty()) {
@@ -92,25 +93,22 @@ public class AltaOrdenActivity extends AppCompatActivity {
                 else {
                     String correo = correoPedidoNuevo.getText().toString();
                     String direccion = direccionPedidoNuevo.getText().toString();
-                    String tipoEnvio = botonEnvioPedido.getText().toString();
+                    if(botonEnvioPedido.isChecked()){
+                        String tipoEnvio = botonEnvioPedido.getText().toString();
+                    }
+                    else{
+                        String tipoEnvio = botonTakeawayPedido.getText().toString();
+                    }
 
                     Orden nuevaOrden = new Orden(correo, direccion, tipoEnvio);
 
-                    // INTENT
-                    //Intent i = new Intent(AltaItemActivity.this, ListaPlatosActivity.class);
-                    //i.putExtra("correo",correo);
-                    //i.putExtra("direccion",direccion);
-                    //i.putExtra("tipoEnvio",tipoEnvio);
-                    //startActivity(i);
-                    //startActivityForResult(i, CODIGO_ACTIVIDAD);
                     new Task().execute();
                     // ALTA DE NOTIFICACION
                     int delay = 8;
                     String tittle = "FarmaTom";
                     String content = "Orden cargada con exito!";
 
-                    AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                            AppDatabase.class, "medicamento-db").allowMainThreadQueries().build();
+                    AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "orden-db").allowMainThreadQueries().build();
                     db.ordenDao().insertar(nuevaOrden);
 
                     scheduleNotification(getNotification(content, tittle), delay);

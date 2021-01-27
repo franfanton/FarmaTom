@@ -12,6 +12,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.inicio_sesion);
         setContentView(R.layout.alta_usuario);
         setContentView(R.layout.alta_orden);
-        setContentView(R.layout.alta_medicamento); asd
+        setContentView(R.layout.alta_medicamento);
     }
 }

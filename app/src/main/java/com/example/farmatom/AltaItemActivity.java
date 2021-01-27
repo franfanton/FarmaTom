@@ -61,23 +61,13 @@ public class AltaItemActivity  extends AppCompatActivity {
                     String descripcion = descripcionMedicamento.getText().toString();
                     String miligramos = miligramosMedicamento.getText().toString();
 
-                    AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                            AppDatabase.class, "medicamento-db").allowMainThreadQueries().build();
-                    Medicamento medicamento = new Medicamento(R.drawable.plato, titulo, descripcion,
-                            precioDouble, miligramos, "0");
-                    db.medicamentoDao().insertar(medicamento);
-
                     Medicamento nuevoMedicamento = new Medicamento(0,titulo,descripcion,precioDouble,miligramos,null);
+                    AppDatabase db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class, "medicamento-db").allowMainThreadQueries().build();
+                    db.medicamentoDao().insertar(nuevoMedicamento);
+
                     // INTENT
                     Intent i = new Intent(AltaItemActivity.this, ListaMedicamentosActivity.class);
-                    i.putExtra("titulo",titulo);
-                    i.putExtra("descripcion",descripcion);
-                    i.putExtra("precio",precioDouble);
-                    i.putExtra("calorias",miligramos);
-                    i.putExtra("CODIGO_ACTIVIDAD", CODIGO_ACTIVIDAD);
                     startActivity(i);
-                    //startActivityForResult(i, CODIGO_ACTIVIDAD);
-
                 }
             }
         });
