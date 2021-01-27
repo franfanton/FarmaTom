@@ -84,20 +84,32 @@ public class ListaMedicamentosActivity extends AppCompatActivity{
     }
 
     public void getActivity(Bundle extras, final int CODIGO_ACTIVIDAD, final AdapterListaMedicamentos adapter, final RecyclerView rvPruebas){
-        adapter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-        setTitulo(listaPruebas.get(rvPruebas.getChildAdapterPosition(view)).getTitulo());
-        setPrecio(listaPruebas.get(rvPruebas.getChildAdapterPosition(view)).getPrecio());
-        setUnidades(listaPruebas.get(rvPruebas.getChildAdapterPosition(view)).getUnidades());
-        if (unidades.equals("0")){
-            Toast.makeText(getApplicationContext(),"Debe encargar al menos una unidad. Unidades: "+unidades,Toast.LENGTH_SHORT).show();
+        switch (CODIGO_ACTIVIDAD){
+            case 0:
+                String datoTitulo = extras.getString("titulo");
+                String datoDescripcion = extras.getString("descripcion");
+                double datoPrecio = extras.getDouble("precio");
+                String datoMiligramos = extras.getString("miligramos");
+                listaPruebas.add(new ListaMedicamentos(R.drawable.medicamento,datoTitulo,datoDescripcion, Double.toString(datoPrecio),datoMiligramos,null));
+                break;
+
+            case 1:
+                adapter.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setTitulo(listaPruebas.get(rvPruebas.getChildAdapterPosition(view)).getTitulo());
+                        setPrecio(listaPruebas.get(rvPruebas.getChildAdapterPosition(view)).getPrecio());
+                        setUnidades(listaPruebas.get(rvPruebas.getChildAdapterPosition(view)).getUnidades());
+                        if (unidades.equals("0")){
+                            Toast.makeText(getApplicationContext(),"Debe encargar al menos una unidad. Unidades: "+unidades,Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            finish();
+                        }
+                    }
+                });
+                break;
         }
-        else {
-            finish();
-        }
-            }
-        });
     }
 
     public String getTitulo() {
