@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/imagen"
-            android:layout_width="100dp"
-            android:layout_height="150dp"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
             android:scaleType="centerCrop" />
 
         <TextView
@@ -26,7 +26,7 @@
             android:id="@+id/tvTitulo"
             android:layout_toRightOf="@+id/imagen"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="10dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,7 +34,8 @@
             android:orientation="horizontal"
             android:id="@+id/bloque1"
             android:layout_below="@+id/tvTitulo"
-            android:layout_alignLeft="@+id/tvTitulo">
+            android:layout_alignLeft="@+id/tvTitulo"
+            android:layout_marginTop="10dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,7 +55,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@+id/bloque1"
-            android:layout_alignLeft="@+id/bloque1" >
+            android:layout_alignLeft="@+id/bloque1"
+            android:layout_marginTop="10dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,7 +76,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@+id/bloque2"
-            android:layout_alignLeft="@+id/bloque2" >
+            android:layout_alignLeft="@+id/bloque2"
+            android:layout_marginTop="10dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -126,12 +129,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:background="#00C1FF"
+                android:backgroundTint="@color/colorPrimary"
+                android:background="@drawable/boton_redondo"
                 android:text="@string/agregar"
                 android:enabled="false"
                 android:layout_marginStart="12dp"
                 card_view:drawableLeftCompat="@drawable/ic_agregar"
-                android:visibility="invisible"/>
+                card_view:drawableRightCompat="@drawable/ic_agregar"
+                android:visibility="invisible"
+                android:padding="5dp"/>
         </LinearLayout>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

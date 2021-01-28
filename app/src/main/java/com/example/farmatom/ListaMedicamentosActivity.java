@@ -51,7 +51,7 @@ public class ListaMedicamentosActivity extends AppCompatActivity{
         List<Medicamento> listaMedicamentos = db.medicamentoDao().buscarTodos();
 
         for (int i = 0; i < listaMedicamentos.size(); i++){
-            listaPruebas.add(new ListaMedicamentos(R.drawable.plato,listaMedicamentos.get(i).getTitulo(),listaMedicamentos.get(i).getDescripcion(),""+listaMedicamentos.get(i).getPrecio(),listaMedicamentos.get(i).getMiligramos(), listaMedicamentos.get(i).getUnidades()));
+            listaPruebas.add(new ListaMedicamentos(R.drawable.medicamento_nuevo,listaMedicamentos.get(i).getTitulo(),listaMedicamentos.get(i).getDescripcion(),""+listaMedicamentos.get(i).getPrecio(),listaMedicamentos.get(i).getMiligramos(), listaMedicamentos.get(i).getUnidades()));
         }
 
         rvPruebas.setHasFixedSize(true);
@@ -90,7 +90,7 @@ public class ListaMedicamentosActivity extends AppCompatActivity{
                 String datoDescripcion = extras.getString("descripcion");
                 double datoPrecio = extras.getDouble("precio");
                 String datoMiligramos = extras.getString("miligramos");
-                listaPruebas.add(new ListaMedicamentos(R.drawable.medicamento,datoTitulo,datoDescripcion, Double.toString(datoPrecio),datoMiligramos,null));
+                listaPruebas.add(new ListaMedicamentos(R.drawable.medicamento_nuevo,datoTitulo,datoDescripcion, Double.toString(datoPrecio),datoMiligramos,null));
                 break;
 
             case 1:

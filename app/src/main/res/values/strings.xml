@@ -27,5 +27,5 @@
     <string name="mailCorrecto">[a-zA-Z0-9._-]+@[a-z]+\\.[a-z]+</string>
 
     <string name="unidades">Unidades:</string>
-    <string name="agregar">+ Agregar +</string>
+    <string name="agregar"> Agregar</string>
 </resources>

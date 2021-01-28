@@ -13,12 +13,14 @@
         android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/tvSaludo"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/titulo_inicial"
-        android:textSize="20sp"
-        android:layout_margin="20dp"
-        android:textAlignment="center"/>
+        android:textSize="30sp"
+        android:layout_marginBottom="@dimen/margenes_inferior"
+        android:layout_marginTop="10dp"
+        android:textAlignment="center"
+        android:textColor="#000000"/>
     <EditText
         android:id="@+id/nombre"
         android:layout_width="match_parent"
@@ -48,137 +50,12 @@
         android:hint="@string/mail"
         android:inputType="textEmailAddress"
         android:layout_marginBottom="10dp"/>
-    <!--<TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/tipo_tarjeta"/>
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <RadioButton
-            android:id="@+id/botonDebito"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/debito"/>
-        <RadioButton
-            android:id="@+id/botonCredito"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/credito" />
-    </RadioGroup>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <EditText
-            android:id="@+id/numeroTarjeta"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="75"
-            android:hint="@string/tarjeta"
-            android:inputType="number"
-            android:maxLength="16"/>
-        <EditText
-            android:id="@+id/codigoCCV"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="25"
-            android:hint="@string/ccv"
-            android:inputType="number"
-            android:enabled="false"
-            android:maxLength="3"/>
-    </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/fechaVencimiento">
-    </TextView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/mes">
-        </TextView>
-        <Spinner
-            android:id="@+id/mesVencimiento"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="50"
-            android:entries="@array/mesVencimiento" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/anio">
-        </TextView>
-
-        <Spinner
-            android:id="@+id/anioVencimiento"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="50"
-            android:entries="@array/aniosVencimiento" />
-
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/numeroCBU"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/cbu"
-        android:inputType="number"
-        android:maxLength="22"/>
-
-    <EditText
-        android:id="@+id/alias"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/alias"
-        android:inputType="number"
-        android:maxLength="20"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Switch
-            android:id="@+id/switchCargaInicial"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/carga"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textoCargaInicial"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margenes_inferior"
-        android:textSize="@dimen/tam_textos"
-        android:visibility="gone" />
-
-    <SeekBar
-        android:id="@+id/seekBarCargaInicial"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="1500"
-        android:visibility="gone" />
--->
     <CheckBox
         android:id="@+id/terminosycondiciones"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/term_cond"
         android:layout_marginBottom="10dp"/>
-
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
@@ -186,7 +63,8 @@
         android:enabled="false"
         android:layout_marginHorizontal="65dp"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="#3B9316"
-        android:text="@string/registrar"/>
+        android:backgroundTint="@color/colorPrimary"
+        android:text="@string/registrar"
+        android:background="@drawable/boton_redondo"/>
 
 </LinearLayout>

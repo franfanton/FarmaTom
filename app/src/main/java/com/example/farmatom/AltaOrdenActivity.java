@@ -88,7 +88,7 @@ public class AltaOrdenActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Seleccione el tipo de envio.", Toast.LENGTH_SHORT).show();
                 }
                 else if(nombreMedicamento.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(), "Debe seleccionar un plato del menú.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Debe seleccionar un medicamento del menú.", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     String correo = correoPedidoNuevo.getText().toString();

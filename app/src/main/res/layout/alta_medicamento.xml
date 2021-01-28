@@ -16,7 +16,10 @@
         android:layout_height="wrap_content"
         android:text="@string/tituloNuevoMedicamento"
         android:textSize="30sp"
-        android:layout_marginBottom="@dimen/margenes_inferior" />
+        android:layout_marginBottom="@dimen/margenes_inferior"
+        android:layout_marginTop="10dp"
+        android:textAlignment="center"
+        android:textColor="#000000"/>
 
 
     <EditText
@@ -75,8 +78,10 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="65dp"
         android:layout_marginBottom="10dp"
-        android:background="#3B9316"
+        android:backgroundTint="@color/colorPrimary"
+        android:background="@drawable/boton_redondo"
         android:hint="@string/guardarNuevoMedicamento"
-        android:enabled="true"/>
+        android:enabled="true"
+        android:textColor="#000000"/>
 
 </LinearLayout>
