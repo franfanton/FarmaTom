@@ -65,7 +65,6 @@
                 android:text="@string/takeawayNuevoPedido" />
         </RadioGroup>
     </LinearLayout>
-
     <Button
         android:id="@+id/botonUbicacion"
         android:layout_width="match_parent"

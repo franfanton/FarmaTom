@@ -54,7 +54,8 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="65dp"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="#3B9316"
+        android:backgroundTint="@color/colorPrimary"
+        android:background="@drawable/boton_redondo"
         android:text="Iniciar Sesión" />
 
     <LinearLayout
@@ -75,7 +76,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="#3B9316"
+            android:backgroundTint="@color/colorPrimary"
+            android:background="@drawable/boton_redondo"
             android:text="Crear Cuenta" />
     </LinearLayout>
 

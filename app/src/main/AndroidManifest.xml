@@ -17,8 +17,8 @@
         <activity android:name=".AltaItemActivity"/>
         <activity android:name=".AltaOrdenActivity"/>
         <activity android:name=".ListaMedicamentosActivity"/>
-        <activity android:name=".InicioSesionActivity"/>
-        <activity android:name=".HomeActivity">
+        <activity android:name=".HomeActivity"/>
+        <activity android:name=".InicioSesionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

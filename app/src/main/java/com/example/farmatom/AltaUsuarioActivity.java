@@ -16,6 +16,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.room.Room;
+
+import com.example.farmatom.Model.Medicamento;
+import com.example.farmatom.Model.Usuario;
+import com.example.farmatom.Room.Usuario.AppDatabase;
 
 public class AltaUsuarioActivity extends AppCompatActivity {
     private EditText nombre,contrasenia1,contrasenia2,correo;
@@ -49,7 +54,6 @@ public class AltaUsuarioActivity extends AppCompatActivity {
 
         boton.setOnClickListener(new View.OnClickListener(){
         public void onClick(View view) {
-            Intent i;
             String emailPattern = getString(R.string.mailCorrecto);
             if(nombre.getText().toString().isEmpty()){
                 Toast.makeText(getApplicationContext(), "El campo nombre esta vacio.", Toast.LENGTH_SHORT).show();
@@ -68,8 +72,17 @@ public class AltaUsuarioActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Ingrese un correo valido",Toast.LENGTH_SHORT).show();
             }
             else {
+                String nombreUsuario = nombre.getText().toString();
+                String contraseniaUsuario = contrasenia1.getText().toString();
+                String correoUsuario = correo.getText().toString();
+
+                Usuario nuevoUsuario = new Usuario(nombreUsuario,contraseniaUsuario,correoUsuario);
+
+                AppDatabase db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class, "usuario-db").allowMainThreadQueries().build();
+                db.usuarioDao().insertar(nuevoUsuario);
+
                 Toast.makeText(getApplicationContext(), "Registro Exitoso!", Toast.LENGTH_SHORT).show();
-                i = new Intent(AltaUsuarioActivity.this, HomeActivity.class);
+                Intent i = new Intent(AltaUsuarioActivity.this, HomeActivity.class);
                 startActivity(i);
             }
         }
