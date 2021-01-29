@@ -235,6 +235,12 @@ public class AltaOrdenActivity extends AppCompatActivity {
                 i = new Intent(AltaOrdenActivity.this, AltaOrdenActivity.class);
                 startActivity(i);
                 break;
+
+            case R.id.cerrarSesion:
+                Toast.makeText(this, "Que vuelvas pronto.", Toast.LENGTH_SHORT).show();
+                i = new Intent(AltaOrdenActivity.this, InicioSesionActivity.class);
+                startActivity(i);
+                break;
         }
         return true;
     }

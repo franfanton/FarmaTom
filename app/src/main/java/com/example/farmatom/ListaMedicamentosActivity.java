@@ -165,6 +165,12 @@ public class ListaMedicamentosActivity extends AppCompatActivity{
                 i = new Intent(ListaMedicamentosActivity.this, AltaOrdenActivity.class);
                 startActivity(i);
                 break;
+
+            case R.id.cerrarSesion:
+                Toast.makeText(this, "Que vuelvas pronto.", Toast.LENGTH_SHORT).show();
+                i = new Intent(ListaMedicamentosActivity.this, InicioSesionActivity.class);
+                startActivity(i);
+                break;
         }
         return true;
     }
