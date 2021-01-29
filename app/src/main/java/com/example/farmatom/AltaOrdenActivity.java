@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -29,6 +30,7 @@ import androidx.room.Room;
 import com.example.farmatom.Model.Medicamento;
 import com.example.farmatom.Model.Orden;
 import com.example.farmatom.Room.Orden.AppDatabase;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Objects;
 
@@ -52,6 +54,7 @@ public class AltaOrdenActivity extends AppCompatActivity {
         setContentView(R.layout.alta_orden);
         Toolbar toolbar = findViewById(R.id.toolbarHome);
         setSupportActionBar(toolbar);
+        final Button botonAgregarUbicacion = findViewById(R.id.botonUbicacion);
         final Button botonAgregarMedicamento = findViewById(R.id.listadoMedicamentos);
         final Button botonGuardarOrden = findViewById(R.id.botonGuardarOrden);
 
@@ -62,6 +65,31 @@ public class AltaOrdenActivity extends AppCompatActivity {
         nombreMedicamento = (TextView) findViewById(R.id.nombreMedicamento);
         totalNuevoPedido = (TextView) findViewById(R.id.totalNuevoPedido);
         progressBar1 = (ProgressBar) findViewById(R.id.progressBar1);
+
+        botonEnvioPedido.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                botonAgregarUbicacion.setEnabled(botonEnvioPedido.isChecked());
+            }
+        });
+
+        botonTakeawayPedido.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                direccionPedidoNuevo.setEnabled(true);
+                direccionPedidoNuevo.setText("");
+            }
+        });
+
+        botonAgregarUbicacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(AltaOrdenActivity.this, MapActivity.class);
+                LatLng ubicacion = new LatLng(0,0);
+                i.putExtra("ubicacion",ubicacion);
+                startActivityForResult(i, CODIGO_ACTIVIDAD);
+            }
+        });
 
         botonAgregarMedicamento.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -37,6 +37,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -44,10 +45,10 @@ dependencies {
     implementation "androidx.room:room-runtime:2.2.5"
     annotationProcessor "androidx.room:room-compiler:2.2.5"
     //androidTestImplementation "androidx.room:room-testing:.2.2.5"
-    // Agregamos Retrofit components
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
     //Sirve para debuggear las peticiones
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 
+    // Utilities for Maps SDK for Android (requires Google Play Services)
+    implementation 'com.google.maps.android:android-maps-utils:2.1.0'
 }

@@ -28,4 +28,8 @@
 
     <string name="unidades">Unidades:</string>
     <string name="agregar"> Agregar</string>
+
+    <!--GOOGLE MAPS KEY-->
+    <string name="google_maps_key">AIzaSyCwnzigaCp81wFuEa4ySBdOymmWEqoOg8A</string>
+
 </resources>
