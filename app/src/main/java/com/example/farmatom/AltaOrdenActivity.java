@@ -1,11 +1,14 @@
 package com.example.farmatom;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -22,9 +25,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import androidx.room.Room;
 
 import com.example.farmatom.Model.Medicamento;
@@ -44,6 +50,7 @@ public class AltaOrdenActivity extends AppCompatActivity {
     private Button botonUbicacion,listadoPlatos,botonGuardarOrden;
     private TextView nombreMedicamento,totalNuevoPedido;
     private final int CODIGO_ACTIVIDAD = 1;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private ProgressBar progressBar1;
 
     @SuppressLint("SetTextI18n")
@@ -66,9 +73,12 @@ public class AltaOrdenActivity extends AppCompatActivity {
         totalNuevoPedido = (TextView) findViewById(R.id.totalNuevoPedido);
         progressBar1 = (ProgressBar) findViewById(R.id.progressBar1);
 
+        pedirPermisos();
+
         botonEnvioPedido.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                direccionPedidoNuevo.setEnabled(botonEnvioPedido.isChecked());
                 botonAgregarUbicacion.setEnabled(botonEnvioPedido.isChecked());
             }
         });
@@ -76,7 +86,6 @@ public class AltaOrdenActivity extends AppCompatActivity {
         botonTakeawayPedido.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                direccionPedidoNuevo.setEnabled(true);
                 direccionPedidoNuevo.setText("");
             }
         });
@@ -144,6 +153,44 @@ public class AltaOrdenActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void pedirPermisos() {
+        //Solicitud de permiso para la ubicación
+        //Comprueba si el permiso ya fue dado
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getApplicationContext(), "Permisos de Ubicación ya otorgados. Gracias.", Toast.LENGTH_SHORT).show();
+        } else {
+            // Si entra al else, no se dió permiso aún.
+            /* Al obtener el permiso denegado se llamara al metodo que esta dentro del if
+            para explicar al usuario porque necesita estos permisos. */
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+                AlertDialog.Builder builder = new AlertDialog.Builder(AltaOrdenActivity.this);
+                builder.setTitle("SOLICITUD DE PERMISOS").setMessage("Se necesitan los permisos de localización, ¿Acepta concederlos?")
+                        .setPositiveButton("Aceptar",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        ActivityCompat.requestPermissions(AltaOrdenActivity.this,
+                                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                                LOCATION_PERMISSION_REQUEST_CODE);
+                                    }
+                                })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(getApplicationContext(), "No se dieron permisos para conocer su ubicacion", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                builder.create().show();
+            }
+            else {
+                //Solicita los permisos con el cuadro de dialogo de sistema.
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (resultCode == RESULT_OK && requestCode == CODIGO_ACTIVIDAD) {
@@ -157,6 +204,17 @@ public class AltaOrdenActivity extends AppCompatActivity {
                 total = unidad*costo;
                 nombreMedicamento.setText(tituloPlato);
                 totalNuevoPedido.setText(total+"");
+            }  else if (data.hasExtra("ubicacion")){
+                LatLng ubicacion = data.getParcelableExtra("ubicacion");
+                if (ubicacion.longitude != 0 && ubicacion.latitude != 0){
+                    //direccionPedidoNuevo.setText(ubicacion.toString());
+                    direccionPedidoNuevo.setText("Ubicación agregada a través de Google Maps.");
+                    direccionPedidoNuevo.setEnabled(false);
+                }
+                else {
+                    Toast.makeText(this, "No se agregó ninguna ubicación, intente nuevamente.", Toast.LENGTH_LONG).show();
+                    direccionPedidoNuevo.setText("");
+                }
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
