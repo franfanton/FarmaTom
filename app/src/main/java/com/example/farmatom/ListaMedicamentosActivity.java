@@ -88,9 +88,9 @@ public class ListaMedicamentosActivity extends AppCompatActivity{
             case 0:
                 String datoTitulo = extras.getString("titulo");
                 String datoDescripcion = extras.getString("descripcion");
-                double datoPrecio = extras.getDouble("precio");
+                String datoPrecio = extras.getString("precio");
                 String datoMiligramos = extras.getString("miligramos");
-                listaPruebas.add(new ListaMedicamentos(R.drawable.medicamento_nuevo,datoTitulo,datoDescripcion, Double.toString(datoPrecio),datoMiligramos,null));
+                listaPruebas.add(new ListaMedicamentos(R.drawable.medicamento_nuevo,datoTitulo,datoDescripcion, datoPrecio,datoMiligramos,null));
                 break;
 
             case 1:

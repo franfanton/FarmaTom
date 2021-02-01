@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "421828650932",
+    "project_id": "farmatom",
+    "storage_bucket": "farmatom.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:421828650932:android:6a0498124137e0980ab4e1",
+        "android_client_info": {
+          "package_name": "com.example.farmatom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "421828650932-pn69nqprrifpavo7utou1g47kok1q21k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBk473HJ76_TDwFy1jmRfHQiiiOFGYCC9M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "421828650932-pn69nqprrifpavo7utou1g47kok1q21k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

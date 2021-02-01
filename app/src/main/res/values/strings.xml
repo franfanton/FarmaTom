@@ -31,5 +31,11 @@
 
     <!--GOOGLE MAPS KEY-->
     <string name="google_maps_key">AIzaSyCwnzigaCp81wFuEa4ySBdOymmWEqoOg8A</string>
+    <string name="buscar_en_galeria">Buscar en galeria</string>
+    <string name="sacar_foto">Sacar foto</string>
+    <string name="todo">TODO</string>
+    <string name="pesos">$</string>
+    <string name="limite_caracteres">Ha alcanzado el límite de caracteres.</string>
+    <string name="contador">0 / 35</string>
 
 </resources>

@@ -1,7 +1,11 @@
 package com.example.farmatom.Model;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.farmatom.ListaMedicamentosActivity;
 import com.example.farmatom.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -25,6 +33,7 @@ public class AdapterListaMedicamentos extends RecyclerView.Adapter<AdapterListaM
     private final int CODIGO_ACTIVIDAD;
     private View.OnClickListener listener;
     private String unidades;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
 
     public AdapterListaMedicamentos(List<ListaMedicamentos> listaPrueba, int CODIGO_ACTIVIDAD){
         this.listaPrueba = listaPrueba;
@@ -41,7 +50,30 @@ public class AdapterListaMedicamentos extends RecyclerView.Adapter<AdapterListaM
 
     @Override
     public void onBindViewHolder(@NonNull final PruebaViewHolder pruebaViewHolder, final int i) {
-        pruebaViewHolder.ivImagen.setImageResource(listaPrueba.get(i).getImagen());
+        if(listaPrueba.get(i).getImagen() == R.drawable.medicamento_nuevo) {
+            StorageReference gsReference = storage.getReferenceFromUrl("gs://farmatom.appspot.com/images/" + listaPrueba.get(i).getTitulo() + ".jpeg");
+
+            final long MEGABYTES = 3 * 1024 * 1024;
+            gsReference.getBytes(MEGABYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    // Exito
+                    Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    DisplayMetrics dm = new DisplayMetrics();
+
+                    pruebaViewHolder.ivImagen.setImageBitmap(bm);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Error - Cargar una imagen por defecto
+                    pruebaViewHolder.ivImagen.setImageResource(listaPrueba.get(i).getImagen());
+                    Log.d("DEBUG", "Error Failure" + exception.getMessage());
+                }
+            });
+        }
+        else
+            pruebaViewHolder.ivImagen.setImageResource(listaPrueba.get(i).getImagen());
         pruebaViewHolder.tvTitulo.setText(listaPrueba.get(i).getTitulo());
         pruebaViewHolder.tvPrecio.setText(listaPrueba.get(i).getPrecio());
         pruebaViewHolder.tvMiligramos.setText(listaPrueba.get(i).getMiligramos());
