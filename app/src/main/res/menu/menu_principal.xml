@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/itemCrear"
-        android:title="Cargar Medicamento"/>
+        android:title="@string/cargar_medicamento"/>
     <item android:id="@+id/altaPedido"
-        android:title="Realizar Pedido"/>
+        android:title="@string/realizar_pedido"/>
     <item android:id="@+id/itemListar"
-        android:title="Listado Medicamentos"/>
+        android:title="@string/listado_medicamentos"/>
     <item android:id="@+id/cerrarSesion"
-        android:title="Cerrar Sesión"/>
+        android:title="@string/cerrar_sesion"/>
 </menu>

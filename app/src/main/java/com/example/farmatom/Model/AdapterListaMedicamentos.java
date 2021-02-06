@@ -1,24 +1,19 @@
 package com.example.farmatom.Model;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.farmatom.ListaMedicamentosActivity;
 import com.example.farmatom.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -59,7 +54,6 @@ public class AdapterListaMedicamentos extends RecyclerView.Adapter<AdapterListaM
                 public void onSuccess(byte[] bytes) {
                     // Exito
                     Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    DisplayMetrics dm = new DisplayMetrics();
 
                     pruebaViewHolder.ivImagen.setImageBitmap(bm);
                 }
@@ -90,12 +84,7 @@ public class AdapterListaMedicamentos extends RecyclerView.Adapter<AdapterListaM
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    if (!(pruebaViewHolder.etUnidades.getText().toString().equals("0") || pruebaViewHolder.etUnidades.getText().toString().isEmpty())) {
-                        pruebaViewHolder.tvAgregarMedicamento.setEnabled(true);
-                    }
-                    else{
-                        pruebaViewHolder.tvAgregarMedicamento.setEnabled(false);
-                    }
+                    pruebaViewHolder.tvAgregarMedicamento.setEnabled(!(pruebaViewHolder.etUnidades.getText().toString().equals("0") || pruebaViewHolder.etUnidades.getText().toString().isEmpty()));
                 }
 
                 @Override
@@ -134,7 +123,7 @@ public class AdapterListaMedicamentos extends RecyclerView.Adapter<AdapterListaM
         }
     }
 
-    public class PruebaViewHolder extends RecyclerView.ViewHolder {
+    public static class PruebaViewHolder extends RecyclerView.ViewHolder {
         ImageView ivImagen;
         TextView tvTitulo,tvPrecio,tvMiligramos,tvDescripcion,tvUnidades, tvAgregarMedicamento;
         EditText etUnidades;

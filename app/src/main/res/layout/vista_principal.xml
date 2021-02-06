@@ -15,5 +15,6 @@
         android:scaleType="centerCrop"
         android:src="@drawable/logo_farmacia"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/todo" />
 </RelativeLayout>
