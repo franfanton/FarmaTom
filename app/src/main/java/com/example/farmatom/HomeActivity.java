@@ -10,12 +10,6 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.auth.api.identity.SignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.firebase.auth.FirebaseAuth;
-
 public class HomeActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +26,6 @@ public class HomeActivity extends AppCompatActivity{
         return true;
     }
 
-    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent i;
@@ -56,14 +49,6 @@ public class HomeActivity extends AppCompatActivity{
                 break;
 
             case R.id.cerrarSesion:
-                FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                mAuth.signOut();
-                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestIdToken(getString(R.string.default_web_client_id))
-                        .requestEmail()
-                        .build();
-                GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-                mGoogleSignInClient.signOut();
                 Toast.makeText(this, "Que vuelvas pronto.", Toast.LENGTH_SHORT).show();
                 i = new Intent(HomeActivity.this, InicioSesionActivity.class);
                 startActivity(i);

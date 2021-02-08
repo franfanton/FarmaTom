@@ -16,8 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="249dp"
             android:layout_marginTop="25dp"
-            app:srcCompat="@drawable/logo_farmacia"
-            android:contentDescription="@string/todo" />
+            app:srcCompat="@drawable/logo_farmacia" />
 
     </FrameLayout>
 
@@ -25,7 +24,7 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/bienvenido_a_farmatom"
+        android:text="Bienvenido a FarmaTom"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
@@ -36,9 +35,8 @@
         android:layout_marginHorizontal="65dp"
         android:layout_marginVertical="10dp"
         android:ems="10"
-        android:hint="@string/usuario"
-        android:inputType="textPersonName"
-        android:autofillHints="" />
+        android:hint="Usuario"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/contrasenia"
@@ -47,9 +45,8 @@
         android:layout_marginHorizontal="65dp"
         android:layout_marginBottom="10dp"
         android:ems="10"
-        android:hint="@string/contrasenia"
-        android:inputType="textPassword"
-        android:autofillHints="" />
+        android:hint="Contraseña"
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/botonInicioSesion"
@@ -59,19 +56,11 @@
         android:layout_marginBottom="10dp"
         android:backgroundTint="@color/colorPrimary"
         android:background="@drawable/boton_redondo"
-        android:text="@string/iniciar_sesion" />
-
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/botonGoogle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="65dp"
-        android:layout_marginBottom="10dp" />
+        android:text="Iniciar Sesión" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <TextView
@@ -80,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
             android:layout_weight="1"
-            android:text="@string/no_tiene_cuenta" />
+            android:text="¿No tiene cuenta?" />
 
         <Button
             android:id="@+id/botonCrearCuenta"
@@ -89,8 +78,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/colorPrimary"
             android:background="@drawable/boton_redondo"
-            android:text="@string/crear_cuenta" />
+            android:text="Crear Cuenta" />
     </LinearLayout>
-
 
 </LinearLayout>

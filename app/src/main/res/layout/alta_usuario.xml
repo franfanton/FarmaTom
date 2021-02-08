@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,33 +27,29 @@
         android:layout_height="wrap_content"
         android:hint="@string/nombre"
         android:inputType="text"
-        android:layout_marginBottom="10dp"
-        android:autofillHints="" />
-    <EditText
-        android:id="@+id/correo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/mail"
-        android:inputType="textEmailAddress"
-        android:layout_marginBottom="10dp"
-        android:autofillHints="" />
+        android:layout_marginBottom="10dp"/>
+
     <EditText
         android:id="@+id/contrasenia1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/passwd"
         android:inputType="textPassword"
-        android:layout_marginBottom="10dp"
-        android:autofillHints="" />
+        android:layout_marginBottom="10dp"/>
     <EditText
         android:id="@+id/contrasenia2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/rep_passwd"
         android:inputType="textPassword"
-        android:layout_marginBottom="10dp"
-        android:autofillHints="" />
-
+        android:layout_marginBottom="10dp"/>
+    <EditText
+        android:id="@+id/correo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/mail"
+        android:inputType="textEmailAddress"
+        android:layout_marginBottom="10dp"/>
     <CheckBox
         android:id="@+id/terminosycondiciones"
         android:layout_width="wrap_content"

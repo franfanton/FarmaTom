@@ -27,8 +27,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/correoNuevoPedido"
         android:inputType="textEmailAddress"
-        android:layout_marginBottom="@dimen/margenes_inferior"
-        android:autofillHints="" />
+        android:layout_marginBottom="@dimen/margenes_inferior" />
 
     <EditText
         android:id="@+id/direccionPedidoNuevo"
@@ -37,8 +36,7 @@
         android:gravity="start|top"
         android:hint="@string/direccionNuevoPedido"
         android:inputType="textMultiLine"
-        android:layout_marginBottom="@dimen/margenes_inferior"
-        android:autofillHints="" />
+        android:layout_marginBottom="@dimen/margenes_inferior" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -103,7 +101,7 @@
         android:id="@+id/nombreMedicamento"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
         android:text=""
         android:textSize="20sp"
         android:layout_marginBottom="@dimen/margenes_inferior"/>

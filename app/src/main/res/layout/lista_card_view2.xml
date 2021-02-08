@@ -16,8 +16,7 @@
             android:id="@+id/imagen"
             android:layout_width="150dp"
             android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/todo" />
+            android:scaleType="centerCrop" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -25,9 +24,9 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
             android:id="@+id/tvTitulo"
-            android:layout_toEndOf="@+id/imagen"
+            android:layout_toRightOf="@+id/imagen"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="10dp"/>
+            android:layout_marginLeft="10dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,13 +34,13 @@
             android:orientation="horizontal"
             android:id="@+id/bloque1"
             android:layout_below="@+id/tvTitulo"
-            android:layout_alignStart="@+id/tvTitulo"
+            android:layout_alignLeft="@+id/tvTitulo"
             android:layout_marginTop="10dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:text="@string/precio"
+                android:layout_marginLeft="12dp"
+                android:text="Precio: $ "
                 android:textColor="@android:color/black" />
             <TextView
                 android:layout_width="wrap_content"
@@ -56,13 +55,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@+id/bloque1"
-            android:layout_alignStart="@+id/bloque1"
+            android:layout_alignLeft="@+id/bloque1"
             android:layout_marginTop="10dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:text="@string/miligramos"
+                android:layout_marginLeft="12dp"
+                android:text="Miligramos: "
                 android:textColor="@android:color/black" />
             <TextView
                 android:layout_width="wrap_content"
@@ -77,13 +76,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@+id/bloque2"
-            android:layout_alignStart="@+id/bloque2"
+            android:layout_alignLeft="@+id/bloque2"
             android:layout_marginTop="10dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:text="@string/descripcion"
+                android:layout_marginLeft="12dp"
+                android:text="Descripción: "
                 android:textColor="@android:color/black" />
             <TextView
                 android:layout_width="wrap_content"
@@ -98,7 +97,7 @@
             android:background="#ffd5d5d5"
             android:id="@+id/linea"
             android:layout_below="@+id/bloque3"
-            android:layout_toEndOf="@+id/imagen">
+            android:layout_toRightOf="@+id/imagen">
         </View>
         <LinearLayout
             android:id="@+id/bloque4"
@@ -106,7 +105,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@+id/linea"
-            android:layout_alignStart="@+id/bloque2"
+            android:layout_alignLeft="@+id/bloque2"
             android:layout_marginTop="10dp"
             android:visibility="visible">
             <TextView
@@ -124,9 +123,7 @@
                 android:text=""
                 android:id="@+id/etUnidades"
                 android:inputType="number"
-                android:visibility="invisible"
-                android:autofillHints=""
-                app:ignore="LabelFor" />
+                android:visibility="invisible"/>
             <TextView
                 android:id="@+id/tvAgregarMedicamento"
                 android:layout_width="wrap_content"
