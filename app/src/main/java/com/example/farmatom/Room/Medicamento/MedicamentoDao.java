@@ -1,4 +1,4 @@
-package com.example.farmatom.Daos;
+package com.example.farmatom.Room.Medicamento;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

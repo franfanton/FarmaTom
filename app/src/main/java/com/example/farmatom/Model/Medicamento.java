@@ -9,12 +9,12 @@ public class Medicamento {
     private Long id;
     private String titulo;
     private String descripcion;
-    private Double precio;
+    private String precio;
     private String miligramos;
     private int imagen;
     private String unidades;
 
-    public Medicamento(int imagen, String titulo, String descripcion, Double precio, String miligramos, String unidades) {
+    public Medicamento(int imagen, String titulo, String descripcion, String precio, String miligramos, String unidades) {
 
         this.imagen = imagen;
         this.titulo = titulo;
@@ -49,11 +49,11 @@ public class Medicamento {
         this.descripcion = descripcion;
     }
 
-    public Double getPrecio() {
+    public String getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Double precio) {
+    public void setPrecio(String precio) {
         this.precio = precio;
     }
 

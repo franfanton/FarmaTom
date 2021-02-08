@@ -1,11 +1,14 @@
 package com.example.farmatom;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -14,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -21,11 +25,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
+import androidx.room.Room;
 
 import com.example.farmatom.Model.Orden;
+import com.example.farmatom.Room.Orden.AppDatabase;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
@@ -36,9 +50,9 @@ public class AltaOrdenActivity extends AppCompatActivity {
     // FIN NOTIFICACION
     private EditText correoPedidoNuevo,direccionPedidoNuevo;
     private RadioButton botonEnvioPedido,botonTakeawayPedido;
-    private Button botonUbicacion,listadoPlatos,botonGuardarOrden;
     private TextView nombreMedicamento,totalNuevoPedido;
     private final int CODIGO_ACTIVIDAD = 1;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private ProgressBar progressBar1;
 
     @SuppressLint("SetTextI18n")
@@ -49,6 +63,7 @@ public class AltaOrdenActivity extends AppCompatActivity {
         setContentView(R.layout.alta_orden);
         Toolbar toolbar = findViewById(R.id.toolbarHome);
         setSupportActionBar(toolbar);
+        final Button botonAgregarUbicacion = findViewById(R.id.botonUbicacion);
         final Button botonAgregarMedicamento = findViewById(R.id.listadoMedicamentos);
         final Button botonGuardarOrden = findViewById(R.id.botonGuardarOrden);
 
@@ -59,6 +74,33 @@ public class AltaOrdenActivity extends AppCompatActivity {
         nombreMedicamento = (TextView) findViewById(R.id.nombreMedicamento);
         totalNuevoPedido = (TextView) findViewById(R.id.totalNuevoPedido);
         progressBar1 = (ProgressBar) findViewById(R.id.progressBar1);
+
+        pedirPermisos();
+
+        botonEnvioPedido.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                direccionPedidoNuevo.setEnabled(botonEnvioPedido.isChecked());
+                botonAgregarUbicacion.setEnabled(botonEnvioPedido.isChecked());
+            }
+        });
+
+        botonTakeawayPedido.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                direccionPedidoNuevo.setText("");
+            }
+        });
+
+        botonAgregarUbicacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(AltaOrdenActivity.this, MapActivity.class);
+                LatLng ubicacion = new LatLng(0,0);
+                i.putExtra("ubicacion",ubicacion);
+                startActivityForResult(i, CODIGO_ACTIVIDAD);
+            }
+        });
 
         botonAgregarMedicamento.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,46 +113,88 @@ public class AltaOrdenActivity extends AppCompatActivity {
         });
 
         botonGuardarOrden.setOnClickListener(new View.OnClickListener(){
-            String emailPattern = getString(R.string.mailCorrecto);
+            final String emailPattern = getString(R.string.mailCorrecto);
+            String tipoEnvio;
             @Override
             public void onClick(View view) {
                 if (correoPedidoNuevo.getText().toString().isEmpty()) {
                     Toast.makeText(getApplicationContext(), "El campo de correo electronico esta vacío.", Toast.LENGTH_SHORT).show();
                 }else if(!(correoPedidoNuevo.getText().toString().trim().matches(emailPattern))) {
                     Toast.makeText(getApplicationContext(),"Ingrese un correo valido",Toast.LENGTH_SHORT).show();
-                }else if (direccionPedidoNuevo.getText().toString().isEmpty()) {
+                }else if (botonEnvioPedido.isChecked() && direccionPedidoNuevo.getText().toString().isEmpty()) {
                     Toast.makeText(getApplicationContext(), "El campo direccion esta vacío.", Toast.LENGTH_SHORT).show();
                 }else if(!(botonEnvioPedido.isChecked() || botonTakeawayPedido.isChecked())){
                     Toast.makeText(getApplicationContext(), "Seleccione el tipo de envio.", Toast.LENGTH_SHORT).show();
                 }
                 else if(nombreMedicamento.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(), "Debe seleccionar un plato del menú.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Debe seleccionar un medicamento del menú.", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     String correo = correoPedidoNuevo.getText().toString();
-                    String direccion = direccionPedidoNuevo.getText().toString();
-                    String tipoEnvio = botonEnvioPedido.getText().toString();
+                    String direccion = null;
+                    String tipoEnvio = null;
+                    if(botonEnvioPedido.isChecked()){
+                        tipoEnvio = "Envio";
+                        direccion = direccionPedidoNuevo.getText().toString();
+                    }
+                    else{
+                        tipoEnvio = "Take Away";
+                    }
 
                     Orden nuevaOrden = new Orden(correo, direccion, tipoEnvio);
 
-                    // INTENT
-                    //Intent i = new Intent(AltaItemActivity.this, ListaPlatosActivity.class);
-                    //i.putExtra("correo",correo);
-                    //i.putExtra("direccion",direccion);
-                    //i.putExtra("tipoEnvio",tipoEnvio);
-                    //startActivity(i);
-                    //startActivityForResult(i, CODIGO_ACTIVIDAD);
                     new Task().execute();
                     // ALTA DE NOTIFICACION
                     int delay = 8;
                     String tittle = "FarmaTom";
                     String content = "Orden cargada con exito!";
 
+                    AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "orden-db").allowMainThreadQueries().build();
+                    db.ordenDao().insertar(nuevaOrden);
+
                     scheduleNotification(getNotification(content, tittle), delay);
                 }
             }
         });
     }
+
+    private void pedirPermisos() {
+        //Solicitud de permiso para la ubicación
+        //Comprueba si el permiso ya fue dado
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getApplicationContext(), "Permisos de Ubicación ya otorgados. Gracias.", Toast.LENGTH_SHORT).show();
+        } else {
+            // Si entra al else, no se dió permiso aún.
+            /* Al obtener el permiso denegado se llamara al metodo que esta dentro del if
+            para explicar al usuario porque necesita estos permisos. */
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+                AlertDialog.Builder builder = new AlertDialog.Builder(AltaOrdenActivity.this);
+                builder.setTitle("SOLICITUD DE PERMISOS").setMessage("Se necesitan los permisos de localización, ¿Acepta concederlos?")
+                        .setPositiveButton("Aceptar",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        ActivityCompat.requestPermissions(AltaOrdenActivity.this,
+                                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                                LOCATION_PERMISSION_REQUEST_CODE);
+                                    }
+                                })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(getApplicationContext(), "No se dieron permisos para conocer su ubicacion", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                builder.create().show();
+            }
+            else {
+                //Solicita los permisos con el cuadro de dialogo de sistema.
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (resultCode == RESULT_OK && requestCode == CODIGO_ACTIVIDAD) {
@@ -124,6 +208,17 @@ public class AltaOrdenActivity extends AppCompatActivity {
                 total = unidad*costo;
                 nombreMedicamento.setText(tituloPlato);
                 totalNuevoPedido.setText(total+"");
+            }  else if (data.hasExtra("ubicacion")){
+                LatLng ubicacion = data.getParcelableExtra("ubicacion");
+                if (ubicacion.longitude != 0 && ubicacion.latitude != 0){
+                    //direccionPedidoNuevo.setText(ubicacion.toString());
+                    direccionPedidoNuevo.setText("Ubicación agregada a través de Google Maps.");
+                    direccionPedidoNuevo.setEnabled(false);
+                }
+                else {
+                    Toast.makeText(this, "No se agregó ninguna ubicación, intente nuevamente.", Toast.LENGTH_LONG).show();
+                    direccionPedidoNuevo.setText("");
+                }
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -181,6 +276,7 @@ public class AltaOrdenActivity extends AppCompatActivity {
         menuInflater.inflate(R.menu.menu_principal, menu);
         return true;
     }
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent i;
@@ -199,7 +295,19 @@ public class AltaOrdenActivity extends AppCompatActivity {
 
             case R.id.altaPedido:
                 Toast.makeText(this, "Selecciono Realizar Pedido", Toast.LENGTH_SHORT).show();
-                i = new Intent(AltaOrdenActivity.this, AltaOrdenActivity.class);
+                break;
+
+            case R.id.cerrarSesion:
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                mAuth.signOut();
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(getString(R.string.default_web_client_id))
+                        .requestEmail()
+                        .build();
+                GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+                mGoogleSignInClient.signOut();
+                Toast.makeText(this, "Que vuelvas pronto.", Toast.LENGTH_SHORT).show();
+                i = new Intent(AltaOrdenActivity.this, InicioSesionActivity.class);
                 startActivity(i);
                 break;
         }

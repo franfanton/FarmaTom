@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -14,9 +15,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.example.farmatom.Model.AdapterListaMedicamentos;
 import com.example.farmatom.Model.ListaMedicamentos;
+import com.example.farmatom.Model.Medicamento;
+import com.example.farmatom.Room.Medicamento.AppDatabase;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,16 +46,17 @@ public class ListaMedicamentosActivity extends AppCompatActivity{
         Toolbar toolbar = findViewById(R.id.toolbarHome);
         setSupportActionBar(toolbar);
 
-        // PRUEBA
         final RecyclerView rvPruebas = findViewById(R.id.rvPruebas);
         listaPruebas = new ArrayList<>();
-        listaPruebas.add(new ListaMedicamentos(R.drawable.aspirina,"Aspirina","Remedio para dolor de cabeza.","350","750", "0"));
-        listaPruebas.add(new ListaMedicamentos(R.drawable.actron,"Actron","Remedio para dolores musculares.","300","600", "0"));
-        listaPruebas.add(new ListaMedicamentos(R.drawable.rivotril,"Clonacepan","El clonazepam es un fármaco perteneciente al grupo de las benzodiazepinas que actúa sobre el sistema nervioso central, con propiedades ansiolíticas, anticonvulsionantes, miorrelajantes, sedantes, hipnóticas y estabilizadoras del estado de ánimo.","480","2", "0"));
-        listaPruebas.add(new ListaMedicamentos(R.drawable.escitalopram,"Escitalopram","El escitalopram es un fármaco antidepresivo perteneciente al grupo de los inhibidores de la recaptación de serotonina, por lo que está emparentado con otros fármacos de este grupo con los que comparte muchas características, tales como la fluoxetina y la paroxetina. Se trata del enantiómero S del citalopram racémico.","275","10", "0"));
-        listaPruebas.add(new ListaMedicamentos(R.drawable.cocaina,"Cocaina","Es un alcaloide tropano y fuerte estimulante utilizado sobre todo como droga recreativa.","230","740", "0"));
-        listaPruebas.add(new ListaMedicamentos(R.drawable.marihuana,"Marihuana","El cannabis, \u200B\u200B es una droga depresora del sistema nervioso.\u200BContiene dentro de sus compuestos la molécula de THC o tetrahidrocannabinol.","750","100", "0"));
-        listaPruebas.add(new ListaMedicamentos(R.drawable.lcd,"LCD","La dietilamida de ácido lisérgico, \u200B LSD-25 o simplemente LSD, también llamada lisérgida y comúnmente conocida como ácido, es una sustancia psicodélica semisintética que se obtiene de la ergolina y de la familia de las triptaminas y que produce efectos psicotrópicos.","525","2", "0"));
+
+        // LISTA DE ROOM
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "medicamento-db").allowMainThreadQueries().build();
+        List<Medicamento> listaMedicamentos = db.medicamentoDao().buscarTodos();
+
+        for (int i = 0; i < listaMedicamentos.size(); i++){
+            listaPruebas.add(new ListaMedicamentos(R.drawable.medicamento_nuevo,listaMedicamentos.get(i).getTitulo(),listaMedicamentos.get(i).getDescripcion(),""+listaMedicamentos.get(i).getPrecio(),listaMedicamentos.get(i).getMiligramos(), listaMedicamentos.get(i).getUnidades()));
+        }
 
         rvPruebas.setHasFixedSize(true);
         LayoutManager lManager = new LinearLayoutManager(this);
@@ -83,9 +92,9 @@ public class ListaMedicamentosActivity extends AppCompatActivity{
             case 0:
                 String datoTitulo = extras.getString("titulo");
                 String datoDescripcion = extras.getString("descripcion");
-                double datoPrecio = extras.getDouble("precio");
+                String datoPrecio = extras.getString("precio");
                 String datoMiligramos = extras.getString("miligramos");
-                listaPruebas.add(new ListaMedicamentos(R.drawable.medicamento,datoTitulo,datoDescripcion, Double.toString(datoPrecio),datoMiligramos,null));
+                listaPruebas.add(new ListaMedicamentos(R.drawable.medicamento_nuevo,datoTitulo,datoDescripcion, datoPrecio,datoMiligramos,null));
                 break;
 
             case 1:
@@ -151,13 +160,25 @@ public class ListaMedicamentosActivity extends AppCompatActivity{
 
             case R.id.itemListar:
                 Toast.makeText(this, "Selecciono ver Lista de Items", Toast.LENGTH_SHORT).show();
-                i = new Intent(ListaMedicamentosActivity.this, ListaMedicamentosActivity.class);
-                //startActivity(i);
                 break;
 
             case R.id.altaPedido:
                 Toast.makeText(this, "Selecciono Realizar Pedido", Toast.LENGTH_SHORT).show();
                 i = new Intent(ListaMedicamentosActivity.this, AltaOrdenActivity.class);
+                startActivity(i);
+                break;
+
+            case R.id.cerrarSesion:
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                mAuth.signOut();
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(getString(R.string.default_web_client_id))
+                        .requestEmail()
+                        .build();
+                GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+                mGoogleSignInClient.signOut();
+                Toast.makeText(this, "Que vuelvas pronto.", Toast.LENGTH_SHORT).show();
+                i = new Intent(ListaMedicamentosActivity.this, InicioSesionActivity.class);
                 startActivity(i);
                 break;
         }

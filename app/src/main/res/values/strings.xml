@@ -27,5 +27,29 @@
     <string name="mailCorrecto">[a-zA-Z0-9._-]+@[a-z]+\\.[a-z]+</string>
 
     <string name="unidades">Unidades:</string>
-    <string name="agregar">+ Agregar +</string>
+    <string name="agregar"> Agregar</string>
+
+    <!--GOOGLE MAPS KEY-->
+    <string name="google_maps_key">AIzaSyCwnzigaCp81wFuEa4ySBdOymmWEqoOg8A</string>
+    <string name="buscar_en_galeria">Buscar en galeria</string>
+    <string name="sacar_foto">Sacar foto</string>
+    <string name="todo">TODO</string>
+    <string name="pesos">$</string>
+    <string name="limite_caracteres">Ha alcanzado el límite de caracteres.</string>
+    <string name="contador">0 / 35</string>
+    <string name="bienvenido_a_farmatom">Bienvenido a FarmaTom</string>
+    <string name="usuario">Usuario</string>
+    <string name="contrasenia">Contraseña</string>
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="no_tiene_cuenta">¿No tiene cuenta?</string>
+    <string name="crear_cuenta">Crear Cuenta</string>
+    <string name="precio">Precio: $</string>
+    <string name="miligramos">Miligramos:</string>
+    <string name="descripcion">Descripción:</string>
+    <string name="confirmar_ubicacion">Confirmar Ubicacion</string>
+    <string name="cargar_medicamento">Cargar Medicamento</string>
+    <string name="realizar_pedido">Realizar Pedido</string>
+    <string name="listado_medicamentos">Listado Medicamentos</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
+
 </resources>

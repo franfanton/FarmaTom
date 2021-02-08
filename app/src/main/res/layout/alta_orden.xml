@@ -16,8 +16,10 @@
         android:layout_height="wrap_content"
         android:text="@string/tituloNuevoPedido"
         android:textSize="30sp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="@dimen/margenes_inferior"
-        android:textColor="@android:color/black"/>
+        android:textColor="#000000"
+        android:textAlignment="center"/>
 
     <EditText
         android:id="@+id/correoPedidoNuevo"
@@ -63,12 +65,12 @@
                 android:text="@string/takeawayNuevoPedido" />
         </RadioGroup>
     </LinearLayout>
-
     <Button
         android:id="@+id/botonUbicacion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#3B9316"
+        android:backgroundTint="#3B9316"
+        android:background="@drawable/boton_redondo"
         android:text="@string/btnAgregarUbicacion"
         android:enabled="false"
         android:layout_marginHorizontal="65dp"
@@ -81,7 +83,8 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="65dp"
         android:layout_marginBottom="10dp"
-        android:background="#3B9316"
+        android:backgroundTint="#3B9316"
+        android:background="@drawable/boton_redondo"
         android:hint="@string/listadoNuevoPedido"
         android:enabled="true"
         android:layout_marginTop="10dp"/>
@@ -127,9 +130,10 @@
         android:layout_marginHorizontal="65dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:background="#3B9316"
+        android:backgroundTint="@color/colorPrimary"
+        android:background="@drawable/boton_redondo"
         android:hint="@string/guardarNuevoPedido"
-        android:enabled="true"/>
+        android:enabled="true" />
 
     <ProgressBar
         android:id="@+id/progressBar1"
