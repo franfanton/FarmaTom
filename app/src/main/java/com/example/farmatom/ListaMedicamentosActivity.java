@@ -21,6 +21,10 @@ import com.example.farmatom.Model.AdapterListaMedicamentos;
 import com.example.farmatom.Model.ListaMedicamentos;
 import com.example.farmatom.Model.Medicamento;
 import com.example.farmatom.Room.Medicamento.AppDatabase;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -156,8 +160,6 @@ public class ListaMedicamentosActivity extends AppCompatActivity{
 
             case R.id.itemListar:
                 Toast.makeText(this, "Selecciono ver Lista de Items", Toast.LENGTH_SHORT).show();
-                i = new Intent(ListaMedicamentosActivity.this, ListaMedicamentosActivity.class);
-                //startActivity(i);
                 break;
 
             case R.id.altaPedido:
@@ -167,6 +169,14 @@ public class ListaMedicamentosActivity extends AppCompatActivity{
                 break;
 
             case R.id.cerrarSesion:
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                mAuth.signOut();
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(getString(R.string.default_web_client_id))
+                        .requestEmail()
+                        .build();
+                GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+                mGoogleSignInClient.signOut();
                 Toast.makeText(this, "Que vuelvas pronto.", Toast.LENGTH_SHORT).show();
                 i = new Intent(ListaMedicamentosActivity.this, InicioSesionActivity.class);
                 startActivity(i);

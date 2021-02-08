@@ -33,10 +33,13 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.room.Room;
 
-import com.example.farmatom.Model.Medicamento;
 import com.example.farmatom.Model.Orden;
 import com.example.farmatom.Room.Orden.AppDatabase;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
@@ -47,7 +50,6 @@ public class AltaOrdenActivity extends AppCompatActivity {
     // FIN NOTIFICACION
     private EditText correoPedidoNuevo,direccionPedidoNuevo;
     private RadioButton botonEnvioPedido,botonTakeawayPedido;
-    private Button botonUbicacion,listadoPlatos,botonGuardarOrden;
     private TextView nombreMedicamento,totalNuevoPedido;
     private final int CODIGO_ACTIVIDAD = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
@@ -111,7 +113,7 @@ public class AltaOrdenActivity extends AppCompatActivity {
         });
 
         botonGuardarOrden.setOnClickListener(new View.OnClickListener(){
-            String emailPattern = getString(R.string.mailCorrecto);
+            final String emailPattern = getString(R.string.mailCorrecto);
             String tipoEnvio;
             @Override
             public void onClick(View view) {
@@ -119,7 +121,7 @@ public class AltaOrdenActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "El campo de correo electronico esta vacío.", Toast.LENGTH_SHORT).show();
                 }else if(!(correoPedidoNuevo.getText().toString().trim().matches(emailPattern))) {
                     Toast.makeText(getApplicationContext(),"Ingrese un correo valido",Toast.LENGTH_SHORT).show();
-                }else if (direccionPedidoNuevo.getText().toString().isEmpty()) {
+                }else if (botonEnvioPedido.isChecked() && direccionPedidoNuevo.getText().toString().isEmpty()) {
                     Toast.makeText(getApplicationContext(), "El campo direccion esta vacío.", Toast.LENGTH_SHORT).show();
                 }else if(!(botonEnvioPedido.isChecked() || botonTakeawayPedido.isChecked())){
                     Toast.makeText(getApplicationContext(), "Seleccione el tipo de envio.", Toast.LENGTH_SHORT).show();
@@ -129,12 +131,14 @@ public class AltaOrdenActivity extends AppCompatActivity {
                 }
                 else {
                     String correo = correoPedidoNuevo.getText().toString();
-                    String direccion = direccionPedidoNuevo.getText().toString();
+                    String direccion = null;
+                    String tipoEnvio = null;
                     if(botonEnvioPedido.isChecked()){
-                        String tipoEnvio = botonEnvioPedido.getText().toString();
+                        tipoEnvio = "Envio";
+                        direccion = direccionPedidoNuevo.getText().toString();
                     }
                     else{
-                        String tipoEnvio = botonTakeawayPedido.getText().toString();
+                        tipoEnvio = "Take Away";
                     }
 
                     Orden nuevaOrden = new Orden(correo, direccion, tipoEnvio);
@@ -272,6 +276,7 @@ public class AltaOrdenActivity extends AppCompatActivity {
         menuInflater.inflate(R.menu.menu_principal, menu);
         return true;
     }
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent i;
@@ -290,11 +295,17 @@ public class AltaOrdenActivity extends AppCompatActivity {
 
             case R.id.altaPedido:
                 Toast.makeText(this, "Selecciono Realizar Pedido", Toast.LENGTH_SHORT).show();
-                i = new Intent(AltaOrdenActivity.this, AltaOrdenActivity.class);
-                startActivity(i);
                 break;
 
             case R.id.cerrarSesion:
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                mAuth.signOut();
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(getString(R.string.default_web_client_id))
+                        .requestEmail()
+                        .build();
+                GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+                mGoogleSignInClient.signOut();
                 Toast.makeText(this, "Que vuelvas pronto.", Toast.LENGTH_SHORT).show();
                 i = new Intent(AltaOrdenActivity.this, InicioSesionActivity.class);
                 startActivity(i);

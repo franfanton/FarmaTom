@@ -37,5 +37,19 @@
     <string name="pesos">$</string>
     <string name="limite_caracteres">Ha alcanzado el límite de caracteres.</string>
     <string name="contador">0 / 35</string>
+    <string name="bienvenido_a_farmatom">Bienvenido a FarmaTom</string>
+    <string name="usuario">Usuario</string>
+    <string name="contrasenia">Contraseña</string>
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="no_tiene_cuenta">¿No tiene cuenta?</string>
+    <string name="crear_cuenta">Crear Cuenta</string>
+    <string name="precio">Precio: $</string>
+    <string name="miligramos">Miligramos:</string>
+    <string name="descripcion">Descripción:</string>
+    <string name="confirmar_ubicacion">Confirmar Ubicacion</string>
+    <string name="cargar_medicamento">Cargar Medicamento</string>
+    <string name="realizar_pedido">Realizar Pedido</string>
+    <string name="listado_medicamentos">Listado Medicamentos</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
 
 </resources>
