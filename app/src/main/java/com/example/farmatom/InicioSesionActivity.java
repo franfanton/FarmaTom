@@ -1,5 +1,4 @@
 package com.example.farmatom;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import com.example.farmatom.Model.ListaMedicamentos;
 import com.example.farmatom.Model.Usuario;
 import com.example.farmatom.Room.Usuario.AppDatabase;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -24,6 +24,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,12 +32,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.List;
+import static android.content.ContentValues.TAG;
 
 public class InicioSesionActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
     private EditText usuario,contrasenia;
     GoogleSignInClient mGoogleSignInClient;
     private final String TAG = "InicioSesionActivity";
+
     private FirebaseAuth mAuth;
 
     @SuppressLint("SetTextI18n")
@@ -49,7 +52,10 @@ public class InicioSesionActivity extends AppCompatActivity {
         //Traemos al activity el boton del layout
         SignInButton botonGoogle = findViewById(R.id.botonGoogle);
         // Inicializar Firebase Auth
+        FirebaseApp.initializeApp(getApplicationContext());
         mAuth = FirebaseAuth.getInstance();
+        // Iniciar Session como usuario anónimo
+        signInAnonymously();
 
         //Configuramos Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -69,10 +75,8 @@ public class InicioSesionActivity extends AppCompatActivity {
 
         final Button botonInicioSesion = findViewById(R.id.botonInicioSesion);
         final Button botonCrearCuenta = findViewById(R.id.botonCrearCuenta);
-
         usuario = (EditText) findViewById(R.id.usuario);
         contrasenia = (EditText) findViewById(R.id.contrasenia);
-
         botonInicioSesion.setOnClickListener(new View.OnClickListener(){
             int bandera = 0;
             public void onClick(View view) {
@@ -90,7 +94,6 @@ public class InicioSesionActivity extends AppCompatActivity {
                     // LISTA DE ROOM
                     AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "usuario-db").allowMainThreadQueries().build();
                     List<Usuario> listaUsuarios = db.usuarioDao().buscarTodos();
-
                     for (int i = 0; i < listaUsuarios.size(); i++) {
                         if (listaUsuarios.get(i).getCorreo().equals(usuario.getText().toString()) && listaUsuarios.get(i).getContrasenia().equals(contrasenia.getText().toString())) {
                             bandera = 1;
@@ -109,7 +112,6 @@ public class InicioSesionActivity extends AppCompatActivity {
                 }
             }
         });
-
         botonCrearCuenta.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
                 Intent i;
@@ -118,7 +120,6 @@ public class InicioSesionActivity extends AppCompatActivity {
             }
         });
     }
-
     private void signInAnonymously() {
         mAuth.signInAnonymously()
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -155,12 +156,11 @@ public class InicioSesionActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> tareaCompleta){
         try{
             GoogleSignInAccount miCuenta = tareaCompleta.getResult(ApiException.class);
-            Toast.makeText(InicioSesionActivity.this, "Inicio de sesion con Google exitoso!", Toast.LENGTH_LONG).show();
+            Log.d(TAG, "Inicio de sesion con Google exitoso!");
             FirebaseGoogleAuth(miCuenta);
-
         }
         catch (ApiException e){
-            Toast.makeText(InicioSesionActivity.this, "ERROR!!! Inicio de sesion con Google falló!!", Toast.LENGTH_LONG).show();
+            Log.d(TAG, "ERROR!!! Inicio de sesion con Google falló!!");
             FirebaseGoogleAuth(null);
         }
     }
@@ -171,11 +171,11 @@ public class InicioSesionActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(InicioSesionActivity.this, "Exito!", Toast.LENGTH_LONG).show();
+                    Log.d(TAG,"Tarea completada con exito!");
                     FirebaseUser usuario = mAuth.getCurrentUser();
                     updateUI(usuario);
                 } else {
-                    Toast.makeText(InicioSesionActivity.this, "ERROR!!! Falló!!", Toast.LENGTH_LONG).show();
+                    Log.d(TAG, "ERROR!!! Falló al realizar la tarea!!");
                     updateUI(null);
                 }
             }
@@ -188,7 +188,7 @@ public class InicioSesionActivity extends AppCompatActivity {
             String nombre = account.getDisplayName();
             String mail = account.getEmail();
 
-            Toast.makeText(getApplicationContext(), "Logueo con Google exitoso.", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Logueo con Google exitoso.");
             Intent j = new Intent(InicioSesionActivity.this, HomeActivity.class);
             startActivity(j);
             Toast.makeText(InicioSesionActivity.this, "Bienvenido "+nombre, Toast.LENGTH_SHORT).show();

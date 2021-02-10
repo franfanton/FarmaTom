@@ -30,22 +30,25 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.SphericalUtil;
 
+import java.security.Provider;
+import java.util.List;
 import java.util.Random;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
     TextView tvMap;
     Button btnMap;
     private GoogleMap myMap;
-    LatLng ubicacion, miUbicacion;
+    LatLng ubicacion, miUbicacion = null;
     // Agrego marcador a una posicion random
     Random marcadorRandom = new Random();
     // Una direccion aleatoria de 0 a 359 grados
-    int direccionRandomEnGrados = marcadorRandom.nextInt(360);
+    double direccionRandomEnGrados = marcadorRandom.nextInt(360);
 
     // Una distancia aleatoria de 100 a 1000 metros
     int distanciaMinima = 100;
     int distanciaMaxima = 1000;
-    int distanciaRandomEnMetros = marcadorRandom.nextInt(distanciaMaxima - distanciaMinima) + distanciaMinima;
+    double distanciaRandomEnMetros = marcadorRandom.nextInt(distanciaMaxima - distanciaMinima) + distanciaMinima;
+    private LocationManager mLocationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,18 +100,28 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             myMap.setMyLocationEnabled(true);
 
             // Mover el mapa a la posición actual.
-            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-            Criteria criteria = new Criteria();
-            String provider = locationManager.getBestProvider(criteria, true);
-            Location location = locationManager.getLastKnownLocation(provider);
+            mLocationManager = (LocationManager)getApplicationContext().getSystemService(LOCATION_SERVICE);
+            List<String> providers = mLocationManager.getProviders(true);
+            Location location = null;
+            for (String provider : providers) {
+                Location l = mLocationManager.getLastKnownLocation(provider);
+                if (l == null) {
+                    continue;
+                }
+                if (location == null || l.getAccuracy() < location.getAccuracy()) {
+                    location = l;
+                }
+            }
+
             if(location!=null){
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
                 miUbicacion = new LatLng(latitude, longitude);
                 myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(miUbicacion, 18));
+                dibujarMapa();
+            } else {
+                Toast.makeText(getApplicationContext(),"Por favor, busque la dirección de envío en el mapa manualmente", Toast.LENGTH_LONG).show();
             }
-
-            dibujarMapa();
 
         }
 

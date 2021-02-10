@@ -27,9 +27,14 @@ import androidx.room.Room;
 
 import com.example.farmatom.Model.Medicamento;
 import com.example.farmatom.Room.Medicamento.AppDatabase;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -269,6 +274,14 @@ public class AltaItemActivity  extends AppCompatActivity {
                 break;
 
             case R.id.cerrarSesion:
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                mAuth.signOut();
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(getString(R.string.default_web_client_id))
+                        .requestEmail()
+                        .build();
+                GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+                mGoogleSignInClient.signOut();
                 Toast.makeText(this, "Que vuelvas pronto.", Toast.LENGTH_SHORT).show();
                 i = new Intent(AltaItemActivity.this, InicioSesionActivity.class);
                 startActivity(i);
