@@ -36,7 +36,11 @@ import androidx.room.Room;
 import com.example.farmatom.Model.Medicamento;
 import com.example.farmatom.Model.Orden;
 import com.example.farmatom.Room.Orden.AppDatabase;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
@@ -295,6 +299,14 @@ public class AltaOrdenActivity extends AppCompatActivity {
                 break;
 
             case R.id.cerrarSesion:
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                mAuth.signOut();
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(getString(R.string.default_web_client_id))
+                        .requestEmail()
+                        .build();
+                GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+                mGoogleSignInClient.signOut();
                 Toast.makeText(this, "Que vuelvas pronto.", Toast.LENGTH_SHORT).show();
                 i = new Intent(AltaOrdenActivity.this, InicioSesionActivity.class);
                 startActivity(i);
