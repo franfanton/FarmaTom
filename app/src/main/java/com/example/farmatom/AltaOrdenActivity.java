@@ -56,6 +56,7 @@ public class AltaOrdenActivity extends AppCompatActivity {
     private final int CODIGO_ACTIVIDAD = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private ProgressBar progressBar1;
+    String latlongUbicacion = null;
 
     @SuppressLint("SetTextI18n")
     //se agregaron las annotation para que deje de mostrar warnings
@@ -65,9 +66,13 @@ public class AltaOrdenActivity extends AppCompatActivity {
         setContentView(R.layout.alta_orden);
         Toolbar toolbar = findViewById(R.id.toolbarHome);
         setSupportActionBar(toolbar);
+        Bundle extras = getIntent().getExtras();
+        String mailUsuario = extras.getString("mail");
+
         final Button botonAgregarUbicacion = findViewById(R.id.botonUbicacion);
         final Button botonAgregarMedicamento = findViewById(R.id.listadoMedicamentos);
         final Button botonGuardarOrden = findViewById(R.id.botonGuardarOrden);
+
 
         correoPedidoNuevo = findViewById(R.id.correoPedidoNuevo);
         direccionPedidoNuevo = findViewById(R.id.direccionPedidoNuevo);
@@ -76,6 +81,8 @@ public class AltaOrdenActivity extends AppCompatActivity {
         nombreMedicamento = (TextView) findViewById(R.id.nombreMedicamento);
         totalNuevoPedido = (TextView) findViewById(R.id.totalNuevoPedido);
         progressBar1 = (ProgressBar) findViewById(R.id.progressBar1);
+
+        correoPedidoNuevo.setText(mailUsuario);
 
         pedirPermisos();
 
@@ -91,6 +98,7 @@ public class AltaOrdenActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 direccionPedidoNuevo.setText("");
+                direccionPedidoNuevo.setEnabled(false);
             }
         });
 
@@ -123,7 +131,7 @@ public class AltaOrdenActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "El campo de correo electronico esta vacío.", Toast.LENGTH_SHORT).show();
                 }else if(!(correoPedidoNuevo.getText().toString().trim().matches(emailPattern))) {
                     Toast.makeText(getApplicationContext(),"Ingrese un correo valido",Toast.LENGTH_SHORT).show();
-                }else if (direccionPedidoNuevo.getText().toString().isEmpty()) {
+                }else if (direccionPedidoNuevo.getText().toString().isEmpty() && botonEnvioPedido.isChecked()) {
                     Toast.makeText(getApplicationContext(), "El campo direccion esta vacío.", Toast.LENGTH_SHORT).show();
                 }else if(!(botonEnvioPedido.isChecked() || botonTakeawayPedido.isChecked())){
                     Toast.makeText(getApplicationContext(), "Seleccione el tipo de envio.", Toast.LENGTH_SHORT).show();
@@ -133,12 +141,18 @@ public class AltaOrdenActivity extends AppCompatActivity {
                 }
                 else {
                     String correo = correoPedidoNuevo.getText().toString();
-                    String direccion = direccionPedidoNuevo.getText().toString();
+                    String direccion = null;
+                    String tipoEnvio = null;
                     if(botonEnvioPedido.isChecked()){
-                        String tipoEnvio = botonEnvioPedido.getText().toString();
+                        tipoEnvio = botonEnvioPedido.getText().toString();
+                        if(direccionPedidoNuevo.getText().toString().equals("Ubicación agregada a través de Google Maps.")){
+                            direccion = latlongUbicacion;
+                        } else{
+                            direccion = direccionPedidoNuevo.getText().toString();
+                        }
                     }
                     else{
-                        String tipoEnvio = botonTakeawayPedido.getText().toString();
+                        tipoEnvio = botonTakeawayPedido.getText().toString();
                     }
 
                     Orden nuevaOrden = new Orden(correo, direccion, tipoEnvio);
@@ -151,7 +165,9 @@ public class AltaOrdenActivity extends AppCompatActivity {
 
                     AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "orden-db").allowMainThreadQueries().build();
                     db.ordenDao().insertar(nuevaOrden);
-
+                    direccionPedidoNuevo.setText("");
+                    nombreMedicamento.setText("");
+                    totalNuevoPedido.setText("");
                     scheduleNotification(getNotification(content, tittle), delay);
                 }
             }
@@ -214,6 +230,7 @@ public class AltaOrdenActivity extends AppCompatActivity {
                     //direccionPedidoNuevo.setText(ubicacion.toString());
                     direccionPedidoNuevo.setText("Ubicación agregada a través de Google Maps.");
                     direccionPedidoNuevo.setEnabled(false);
+                    latlongUbicacion = "("+ubicacion.latitude+";"+ubicacion.longitude+")";
                 }
                 else {
                     Toast.makeText(this, "No se agregó ninguna ubicación, intente nuevamente.", Toast.LENGTH_LONG).show();
@@ -279,23 +296,33 @@ public class AltaOrdenActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent i;
+        Bundle extras = getIntent().getExtras();
+        String mailUsuario = extras.getString("mail");
+        String mailAdmin = "admin@farmatom.com";
         switch(item.getItemId()){
             case R.id.itemCrear:
-                Toast.makeText(this, "Selecciono Crear Item", Toast.LENGTH_SHORT).show();
-                i = new Intent(AltaOrdenActivity.this, AltaItemActivity.class);
-                startActivity(i);
+                if (mailUsuario.equals(mailAdmin)) {
+                    Toast.makeText(this, "Selecciono Crear Item", Toast.LENGTH_SHORT).show();
+                    i = new Intent(AltaOrdenActivity.this, AltaItemActivity.class);
+                    i.putExtra("mail", mailUsuario);
+                    startActivity(i);
+                } else {
+                    Toast.makeText(this, "Disculpe. Usted no puede agregar medicamentos.", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case R.id.itemListar:
                 Toast.makeText(this, "Selecciono ver Lista de Items", Toast.LENGTH_SHORT).show();
                 i = new Intent(AltaOrdenActivity.this, ListaMedicamentosActivity.class);
+                i.putExtra("mail", mailUsuario);
                 startActivity(i);
                 break;
 
             case R.id.altaPedido:
-                Toast.makeText(this, "Selecciono Realizar Pedido", Toast.LENGTH_SHORT).show();
-                i = new Intent(AltaOrdenActivity.this, AltaOrdenActivity.class);
-                startActivity(i);
+                Toast.makeText(this, "Usted ya se encuentra realizando un pedido.", Toast.LENGTH_SHORT).show();
+//                i = new Intent(AltaOrdenActivity.this, AltaOrdenActivity.class);
+//                i.putExtra("mail", mailUsuario);
+//                startActivity(i);
                 break;
 
             case R.id.cerrarSesion:

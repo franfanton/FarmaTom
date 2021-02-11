@@ -151,22 +151,31 @@ public class ListaMedicamentosActivity extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent i;
+        Bundle extras = getIntent().getExtras();
+        String mailUsuario = extras.getString("mail");
+        String mailAdmin = "admin@farmatom.com";
         switch(item.getItemId()){
             case R.id.itemCrear:
-                Toast.makeText(this, "Selecciono Crear Item", Toast.LENGTH_SHORT).show();
-                i = new Intent(ListaMedicamentosActivity.this, AltaItemActivity.class);
-                startActivity(i);
+                if (mailUsuario.equals(mailAdmin)) {
+                    Toast.makeText(this, "Selecciono Crear Item", Toast.LENGTH_SHORT).show();
+                    i = new Intent(ListaMedicamentosActivity.this, AltaItemActivity.class);
+                    i.putExtra("mail", mailUsuario);
+                    startActivity(i);
+                } else {
+                    Toast.makeText(this, "Disculpe. Usted no puede agregar medicamentos.", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case R.id.itemListar:
-                Toast.makeText(this, "Selecciono ver Lista de Items", Toast.LENGTH_SHORT).show();
-                i = new Intent(ListaMedicamentosActivity.this, ListaMedicamentosActivity.class);
+                Toast.makeText(this, "Usted ya se encuentra en el listado de medicamentos.", Toast.LENGTH_SHORT).show();
+                //i = new Intent(ListaMedicamentosActivity.this, ListaMedicamentosActivity.class);
                 //startActivity(i);
                 break;
 
             case R.id.altaPedido:
                 Toast.makeText(this, "Selecciono Realizar Pedido", Toast.LENGTH_SHORT).show();
                 i = new Intent(ListaMedicamentosActivity.this, AltaOrdenActivity.class);
+                i.putExtra("mail", mailUsuario);
                 startActivity(i);
                 break;
 

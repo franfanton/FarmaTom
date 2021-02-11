@@ -22,7 +22,10 @@ public interface UsuarioDao {
     void actualizar(Usuario usuario);
 
     @Query("SELECT * FROM usuario WHERE id = :id LIMIT 1")
-    Usuario buscar(String id);
+    Usuario buscarId(String id);
+
+    @Query("SELECT * FROM usuario WHERE correo = :correo LIMIT 1")
+    Usuario buscarMail(String correo);
 
     @Query("SELECT * FROM usuario")
     List<Usuario> buscarTodos();
