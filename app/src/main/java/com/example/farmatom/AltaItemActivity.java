@@ -142,7 +142,7 @@ public class AltaItemActivity  extends AppCompatActivity {
                     String descripcion = descripcionMedicamento.getText().toString();
                     String miligramos = miligramosMedicamento.getText().toString();
 
-                    Medicamento nuevoMedicamento = new Medicamento(R.drawable.medicamento_nuevo,titulo,descripcion,precio,miligramos,null);
+                    Medicamento nuevoMedicamento = new Medicamento(R.drawable.medicamento_nuevo,titulo,descripcion,precio,miligramos,"0");
                     AppDatabase db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class, "medicamento-db").allowMainThreadQueries().build();
                     db.medicamentoDao().insertar(nuevoMedicamento);
                     // INTENT
