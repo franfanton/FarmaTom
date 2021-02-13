@@ -67,7 +67,7 @@ public class AltaOrdenActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbarHome);
         setSupportActionBar(toolbar);
         Bundle extras = getIntent().getExtras();
-        String mailUsuario = extras.getString("mail");
+        final String mailUsuario = extras.getString("mail");
 
         final Button botonAgregarUbicacion = findViewById(R.id.botonUbicacion);
         final Button botonAgregarMedicamento = findViewById(R.id.listadoMedicamentos);
@@ -118,6 +118,7 @@ public class AltaOrdenActivity extends AppCompatActivity {
                 Intent i;
                 i = new Intent(AltaOrdenActivity.this, ListaMedicamentosActivity.class);
                 i.putExtra("CODIGO_ACTIVIDAD", CODIGO_ACTIVIDAD);
+                i.putExtra("mail", mailUsuario);
                 startActivityForResult(i,CODIGO_ACTIVIDAD);
             }
         });
