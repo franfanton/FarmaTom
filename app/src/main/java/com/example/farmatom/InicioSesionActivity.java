@@ -113,6 +113,7 @@ public class InicioSesionActivity extends AppCompatActivity {
                         // Iniciar Session como usuario anónimo de firebase
                         signInAnonymously();
                         Toast.makeText(getApplicationContext(), "Bienvenido "+nombreUsuario, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(InicioSesionActivity.this, "Ingreso correctamente con el mail: "+mailUsuario, Toast.LENGTH_SHORT).show();
                         Intent j = new Intent(InicioSesionActivity.this, HomeActivity.class);
                         j.putExtra("mail", mailUsuario);
                         startActivity(j);
@@ -201,6 +202,7 @@ public class InicioSesionActivity extends AppCompatActivity {
 
             Log.d(TAG, "Logueo con Google exitoso.");
             Intent j = new Intent(InicioSesionActivity.this, HomeActivity.class);
+            j.putExtra("mail", mail);
             startActivity(j);
             Toast.makeText(InicioSesionActivity.this, "Bienvenido "+nombre, Toast.LENGTH_SHORT).show();
             Toast.makeText(InicioSesionActivity.this, "Ingreso correctamente con el mail: "+mail, Toast.LENGTH_SHORT).show();
