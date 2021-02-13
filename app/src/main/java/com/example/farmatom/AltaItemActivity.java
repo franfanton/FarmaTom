@@ -75,6 +75,9 @@ public class AltaItemActivity  extends AppCompatActivity {
         tvContador = findViewById(R.id.tvContador);
         tvLimite = findViewById(R.id.tvLimite);
 
+        Bundle extras = getIntent().getExtras();
+        final String mailUsuario = extras.getString("mail");
+
         camara.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,9 +145,9 @@ public class AltaItemActivity  extends AppCompatActivity {
                     Medicamento nuevoMedicamento = new Medicamento(R.drawable.medicamento_nuevo,titulo,descripcion,precio,miligramos,null);
                     AppDatabase db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class, "medicamento-db").allowMainThreadQueries().build();
                     db.medicamentoDao().insertar(nuevoMedicamento);
-
                     // INTENT
                     Intent i = new Intent(AltaItemActivity.this, ListaMedicamentosActivity.class);
+                    i.putExtra("mail", mailUsuario);
                     startActivity(i);
                 }
             }
