@@ -106,6 +106,8 @@ public class AdapterListaMedicamentos extends RecyclerView.Adapter<AdapterListaM
                         pruebaViewHolder.tvAgregarMedicamento.setVisibility(View.VISIBLE);
                     }
                     else {
+                        unidades = pruebaViewHolder.etUnidades.getText().toString();
+                        listaPrueba.get(i).setUnidades(unidades);
                         pruebaViewHolder.tvAgregarMedicamento.setVisibility(View.INVISIBLE);
                     }
                 }

@@ -37,6 +37,7 @@ import static android.content.ContentValues.TAG;
 public class InicioSesionActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
     private EditText usuario,contrasenia;
+    private String nombreUsuario, mailUsuario;
     GoogleSignInClient mGoogleSignInClient;
     private final String TAG = "InicioSesionActivity";
 
@@ -77,6 +78,14 @@ public class InicioSesionActivity extends AppCompatActivity {
         final Button botonCrearCuenta = findViewById(R.id.botonCrearCuenta);
         usuario = (EditText) findViewById(R.id.usuario);
         contrasenia = (EditText) findViewById(R.id.contrasenia);
+
+        final AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "usuario-db").allowMainThreadQueries().build();
+        Usuario admin = db.usuarioDao().buscarMail("admin@farmatom.com");
+        if (admin == null){
+            admin = new Usuario("Administrador", "admin", "admin@farmatom.com");
+            db.usuarioDao().insertar(admin);
+        }
+
         botonInicioSesion.setOnClickListener(new View.OnClickListener(){
             int bandera = 0;
             public void onClick(View view) {
@@ -92,18 +101,21 @@ public class InicioSesionActivity extends AppCompatActivity {
                 }
                 else {
                     // LISTA DE ROOM
-                    AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "usuario-db").allowMainThreadQueries().build();
                     List<Usuario> listaUsuarios = db.usuarioDao().buscarTodos();
                     for (int i = 0; i < listaUsuarios.size(); i++) {
                         if (listaUsuarios.get(i).getCorreo().equals(usuario.getText().toString()) && listaUsuarios.get(i).getContrasenia().equals(contrasenia.getText().toString())) {
                             bandera = 1;
+                            nombreUsuario = listaUsuarios.get(i).getNombre();
+                            mailUsuario = listaUsuarios.get(i).getCorreo();
                         }
                     }
                     if(bandera == 1){
                         // Iniciar Session como usuario anónimo de firebase
                         signInAnonymously();
-                        Toast.makeText(getApplicationContext(), "Logueo con exito.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Bienvenido "+nombreUsuario, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(InicioSesionActivity.this, "Ingreso correctamente con el mail: "+mailUsuario, Toast.LENGTH_SHORT).show();
                         Intent j = new Intent(InicioSesionActivity.this, HomeActivity.class);
+                        j.putExtra("mail", mailUsuario);
                         startActivity(j);
                     }
                     else{
@@ -190,6 +202,7 @@ public class InicioSesionActivity extends AppCompatActivity {
 
             Log.d(TAG, "Logueo con Google exitoso.");
             Intent j = new Intent(InicioSesionActivity.this, HomeActivity.class);
+            j.putExtra("mail", mail);
             startActivity(j);
             Toast.makeText(InicioSesionActivity.this, "Bienvenido "+nombre, Toast.LENGTH_SHORT).show();
             Toast.makeText(InicioSesionActivity.this, "Ingreso correctamente con el mail: "+mail, Toast.LENGTH_SHORT).show();

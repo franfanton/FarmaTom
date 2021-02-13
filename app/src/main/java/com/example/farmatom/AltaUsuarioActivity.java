@@ -22,6 +22,8 @@ import com.example.farmatom.Model.Medicamento;
 import com.example.farmatom.Model.Usuario;
 import com.example.farmatom.Room.Usuario.AppDatabase;
 
+import java.util.List;
+
 public class AltaUsuarioActivity extends AppCompatActivity {
     private EditText nombre,contrasenia1,contrasenia2,correo;
     private CheckBox terminosycondiciones;
@@ -76,14 +78,20 @@ public class AltaUsuarioActivity extends AppCompatActivity {
                 String contraseniaUsuario = contrasenia1.getText().toString();
                 String correoUsuario = correo.getText().toString();
 
-                Usuario nuevoUsuario = new Usuario(nombreUsuario,contraseniaUsuario,correoUsuario);
-
                 AppDatabase db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class, "usuario-db").allowMainThreadQueries().build();
-                db.usuarioDao().insertar(nuevoUsuario);
+                //Comprobamos si el mail ingresado ya se encuentra en la base de datos
+                Usuario mailExistente = db.usuarioDao().buscarMail(correoUsuario);
+                if(mailExistente==null){
+                    Usuario nuevoUsuario = new Usuario(nombreUsuario,contraseniaUsuario,correoUsuario);
+                    db.usuarioDao().insertar(nuevoUsuario);
 
-                Toast.makeText(getApplicationContext(), "Registro Exitoso!", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(AltaUsuarioActivity.this, HomeActivity.class);
-                startActivity(i);
+                    Toast.makeText(getApplicationContext(), "Registro Exitoso! Bienvenido "+nombreUsuario, Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(AltaUsuarioActivity.this, HomeActivity.class);
+                    i.putExtra("mail", correoUsuario);
+                    startActivity(i);
+                } else {
+                    Toast.makeText(getApplicationContext(), "El correo "+correoUsuario+" ya existe en nuestra base de datos. Por favor, ingrese uno diferente", Toast.LENGTH_SHORT).show();
+                }
             }
         }
         });

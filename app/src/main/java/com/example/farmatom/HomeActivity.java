@@ -1,5 +1,4 @@
 package com.example.farmatom;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +15,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity{
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +23,7 @@ public class HomeActivity extends AppCompatActivity{
         setContentView(R.layout.vista_principal);
         Toolbar toolbar = findViewById(R.id.toolbarHome);
         setSupportActionBar(toolbar);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -34,22 +35,32 @@ public class HomeActivity extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent i;
+        Bundle extras = getIntent().getExtras();
+        String mailUsuario = extras.getString("mail");
+        String mailAdmin = "admin@farmatom.com";
         switch(item.getItemId()){
             case R.id.itemCrear:
-                Toast.makeText(this, "Selecciono Crear Item", Toast.LENGTH_SHORT).show();
-                i = new Intent(HomeActivity.this, AltaItemActivity.class);
-                startActivity(i);
+                if (mailUsuario.equals(mailAdmin)) {
+                    Toast.makeText(this, "Selecciono Crear Item", Toast.LENGTH_SHORT).show();
+                    i = new Intent(HomeActivity.this, AltaItemActivity.class);
+                    i.putExtra("mail", mailUsuario);
+                    startActivity(i);
+                } else {
+                    Toast.makeText(this, "Disculpe. Usted no puede agregar medicamentos.", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case R.id.itemListar:
                 Toast.makeText(this, "Selecciono ver Lista de Items", Toast.LENGTH_SHORT).show();
                 i = new Intent(HomeActivity.this, ListaMedicamentosActivity.class);
+                i.putExtra("mail", mailUsuario);
                 startActivity(i);
                 break;
 
             case R.id.altaPedido:
                 Toast.makeText(this, "Selecciono Realizar Pedido", Toast.LENGTH_SHORT).show();
                 i = new Intent(HomeActivity.this, AltaOrdenActivity.class);
+                i.putExtra("mail", mailUsuario);
                 startActivity(i);
                 break;
 

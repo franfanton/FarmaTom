@@ -75,6 +75,9 @@ public class AltaItemActivity  extends AppCompatActivity {
         tvContador = findViewById(R.id.tvContador);
         tvLimite = findViewById(R.id.tvLimite);
 
+        Bundle extras = getIntent().getExtras();
+        final String mailUsuario = extras.getString("mail");
+
         camara.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,12 +142,12 @@ public class AltaItemActivity  extends AppCompatActivity {
                     String descripcion = descripcionMedicamento.getText().toString();
                     String miligramos = miligramosMedicamento.getText().toString();
 
-                    Medicamento nuevoMedicamento = new Medicamento(R.drawable.medicamento_nuevo,titulo,descripcion,precio,miligramos,null);
+                    Medicamento nuevoMedicamento = new Medicamento(R.drawable.medicamento_nuevo,titulo,descripcion,precio,miligramos,"0");
                     AppDatabase db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class, "medicamento-db").allowMainThreadQueries().build();
                     db.medicamentoDao().insertar(nuevoMedicamento);
-
                     // INTENT
                     Intent i = new Intent(AltaItemActivity.this, ListaMedicamentosActivity.class);
+                    i.putExtra("mail", mailUsuario);
                     startActivity(i);
                 }
             }
@@ -254,22 +257,33 @@ public class AltaItemActivity  extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent i;
+        Bundle extras = getIntent().getExtras();
+        String mailUsuario = extras.getString("mail");
+        String mailAdmin = "admin@farmatom.com";
         switch(item.getItemId()){
             case R.id.itemCrear:
-                Toast.makeText(this, "Selecciono Crear Item", Toast.LENGTH_SHORT).show();
-                i = new Intent(AltaItemActivity.this, AltaItemActivity.class);
-                startActivity(i);
+//                if (mailUsuario.equals(mailAdmin)) {
+//                    Toast.makeText(this, "Selecciono Crear Item", Toast.LENGTH_SHORT).show();
+//                    i = new Intent(AltaItemActivity.this, AltaItemActivity.class);
+//                    i.putExtra("mail", mailUsuario);
+//                    startActivity(i);
+//                } else {
+//                    Toast.makeText(this, "Disculpe. Usted no puede agregar medicamentos.", Toast.LENGTH_SHORT).show();
+//                }
+                Toast.makeText(this, "Usted ya está dando de alta un medicamento.", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.itemListar:
                 Toast.makeText(this, "Selecciono ver Lista de Items", Toast.LENGTH_SHORT).show();
                 i = new Intent(AltaItemActivity.this, ListaMedicamentosActivity.class);
+                i.putExtra("mail", mailUsuario);
                 startActivity(i);
                 break;
 
             case R.id.altaPedido:
                 Toast.makeText(this, "Selecciono Realizar Pedido", Toast.LENGTH_SHORT).show();
                 i = new Intent(AltaItemActivity.this, AltaOrdenActivity.class);
+                i.putExtra("mail", mailUsuario);
                 startActivity(i);
                 break;
 
