@@ -61,14 +61,6 @@
         android:background="@drawable/boton_redondo"
         android:text="@string/iniciar_sesion" />
 
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/botonGoogle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="65dp"
-        android:layout_marginBottom="10dp" />
-
     <com.google.android.gms.common.SignInButton
         android:id="@+id/botonGoogle"
         android:layout_width="match_parent"
