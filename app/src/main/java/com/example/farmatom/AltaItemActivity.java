@@ -136,6 +136,9 @@ public class AltaItemActivity  extends AppCompatActivity {
                 else if(miligramosMedicamento.getText().toString().isEmpty()){
                     Toast.makeText(getApplicationContext(), "El campo de miligramos esta vacio.", Toast.LENGTH_SHORT).show();
                 }
+                else if(fotoMedicamento.getVisibility() == View.GONE){
+                    Toast.makeText(getApplicationContext(), "Debe añadir una foto para cargar el medicamento.", Toast.LENGTH_SHORT).show();
+                }
                 else {
                     Toast.makeText(getApplicationContext(), "Medicamento Guardado!", Toast.LENGTH_SHORT).show();
                     String titulo = tituloMedicamento.getText().toString();
